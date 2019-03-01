@@ -115,7 +115,7 @@ class SequenceTools:
             item['sequenceName'] = constructName
             if item['peptidePosition'] == positionToMutate:
                 if item['peptide'] == beforeAminoAcid:
-                    item['peptide'] = afterAminoAcid
+                    item['peptide'] = Seq(afterAminoAcid)
                     item['dna'] = self.backTranslateDnaCodonMinimalNucelotideChanges(item['dna'], 'D')
             newDeconstructedList.append(item)
             i = i+1
@@ -170,7 +170,7 @@ class SequenceTools:
 
         for codon in codonScores:
             if bestCodonScore == codonScores[codon]:
-                return codon
+                return Seq(codon)
 
 
 

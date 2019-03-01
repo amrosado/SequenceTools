@@ -16,7 +16,7 @@ tools.deconstructDNASequence(ecoR1Seq, "EcoRI", False)
 seqPeptideSeq = tools.createSeqObjectFromString("ATGGGGATCCTTCCCAGCCCTGGGATGCCTGCGCTGCTCTCCCTCGTGAGCCTTCTCTCCGTGCTGCTGATGGGTTGCGTAGCT")
 tools.deconstructDNASequence(seqPeptideSeq, "SecretionSignal", True)
 
-linker1Seq = tools.createSeqObjectFromString("GGTACC")
+linker1Seq = tools.createSeqObjectFromString("GGTACCGGA")
 tools.deconstructDNASequence(linker1Seq, "Linker1", True)
 
 linker2Seq = tools.createSeqObjectFromString("GGTAGTGGTGGTAGTGGT")
