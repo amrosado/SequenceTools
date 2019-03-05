@@ -14,7 +14,7 @@ class SequenceTools:
 
     allConstructs = None
 
-    def returnFirstCodingSequence(self, seq, maxPeptideLength):
+    def returnFirstCodingSequence(self, seq, maxPeptideLength=None):
         start = None
         peptideDNASeq = None
         for i in range(0, len(seq)):
