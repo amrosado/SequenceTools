@@ -14,22 +14,26 @@ class SequenceTools:
 
     allConstructs = None
 
-    def returnFirstCodingSequence(self, seq, maxPeptideLength=None):
+    def returnFirstCodingSequence(self, seq, maxPeptideLength=None, minPeptideLength=None):
         start = None
         peptideDNASeq = None
         for i in range(0, len(seq)):
             subSeq = seq[i:i+3]
             peptide = subSeq.translate(CodonTable.unambiguous_dna_by_id[1], to_stop=True)
+            seqPeptide = seq[i:].translate(CodonTable.unambiguous_dna_by_id[1], to_stop=True)
             if str(peptide) == "M":
-                start = i
-                break
+                seqPeptideLen = len(seqPeptide)
+                if minPeptideLength is not None and len(seqPeptide) >= minPeptideLength:
+                    start = i
+                    break
         startToEnd = seq[start:]
         endPeptide = None
-        for i in range(0, len(startToEnd)//3):
+        rang = range(len(startToEnd)//3)
+        for i in range(len(startToEnd)//3):
             if maxPeptideLength is not None:
                 if i+1 <= maxPeptideLength:
                     triplet = startToEnd[i*3:(i+1)*3]
-                    translatedTriplet = triplet.translate(CodonTable.unambiguous_dna_by_id[1], to_stop=True)
+                    translatedTriplet = triplet.translate(CodonTable.unambiguous_dna_by_id[1])
                     if translatedTriplet == '*':
                         peptideDNASeq = startToEnd[:(i+1)*3]
                 else:
@@ -37,15 +41,17 @@ class SequenceTools:
                     break
             else:
                 triplet = startToEnd[i*3:(i+1)*3]
-                translatedTriplet = triplet.translate(CodonTable.unambiguous_dna_by_id[1], to_stop=True)
+                translatedTriplet = triplet.translate(CodonTable.unambiguous_dna_by_id[1])
                 if translatedTriplet == '*':
                     peptideDNASeq = startToEnd[:(i+1)*3]
-
+                    break
+                elif i == (len(startToEnd)//3-1):
+                    peptideDNASeq = startToEnd[:(i+1)*3]
         return peptideDNASeq
 
-    def deconstructImportedCDNASequence(self, sequence, sequenceIdentifier, maxPeptideLength=None):
+    def deconstructImportedCDNASequence(self, sequence, sequenceIdentifier, maxPeptideLength=None, minPeptideLength=None):
         seq = Seq(sequence)
-        codingSeq = self.returnFirstCodingSequence(seq, maxPeptideLength)
+        codingSeq = self.returnFirstCodingSequence(seq, maxPeptideLength, minPeptideLength)
         protein = codingSeq.translate(CodonTable.unambiguous_dna_by_id[1])
         deconstructedDict = {}
         deconstructedDict['coding'] = True
