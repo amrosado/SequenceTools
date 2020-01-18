@@ -14,7 +14,7 @@ class SequenceTools:
 
     allConstructs = None
 
-    def returnFirstCodingSequence(self, seq, maxPeptideLength=None, minPeptideLength=None):
+    def return_first_coding_sequence(self, seq, maxPeptideLength=None, minPeptideLength=None):
         start = None
         peptideDNASeq = None
         for i in range(0, len(seq)):
@@ -49,9 +49,9 @@ class SequenceTools:
                     peptideDNASeq = startToEnd[:(i+1)*3]
         return peptideDNASeq
 
-    def deconstructImportedCDNASequence(self, sequence, sequenceIdentifier, maxPeptideLength=None, minPeptideLength=None):
+    def deconstruct_imported_cdna_sequence(self, sequence, sequenceIdentifier, maxPeptideLength=None, minPeptideLength=None):
         seq = Seq(sequence)
-        codingSeq = self.returnFirstCodingSequence(seq, maxPeptideLength, minPeptideLength)
+        codingSeq = self.return_first_coding_sequence(seq, maxPeptideLength, minPeptideLength)
         protein = codingSeq.translate(CodonTable.unambiguous_dna_by_id[1])
         deconstructedDict = {}
         deconstructedDict['coding'] = True
@@ -73,7 +73,7 @@ class SequenceTools:
         self.allDeconstructedSequences[sequenceIdentifier] = deconstructedDict
         self.allConstructs[sequenceIdentifier] = deconstructedDict
 
-    def deconstructDNASequence(self, sequence, sequenceIdentifier, coding):
+    def deconstruct_dna_sequence(self, sequence, sequenceIdentifier, coding):
         if coding:
             protein = sequence.translate(CodonTable.unambiguous_dna_by_id[1])
             deconstructedDict = {}
@@ -111,7 +111,7 @@ class SequenceTools:
 
         self.allDeconstructedSequences[sequenceIdentifier] = deconstructedDict
 
-    def makeNewDeconstructedSequenceFromConstructSequenceWithPeptideMutation(self, deconstructedSeq, constructName, positionToMutate, beforeAminoAcid, afterAminoAcid):
+    def make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(self, deconstructedSeq, constructName, positionToMutate, beforeAminoAcid, afterAminoAcid):
         newDeconstructedList = []
         i = 0
         for item in deconstructedSeq['deconstructedList']:
@@ -122,20 +122,20 @@ class SequenceTools:
             if item['peptidePosition'] == positionToMutate:
                 if item['peptide'] == beforeAminoAcid:
                     item['peptide'] = Seq(afterAminoAcid)
-                    item['dna'] = self.backTranslateDnaCodonMinimalNucelotideChanges(item['dna'], 'D')
+                    item['dna'] = self.back_translate_dna_codon_minimal_nucelotide_changes(item['dna'], 'D')
             newDeconstructedList.append(item)
             i = i+1
         newDeconstructedSeq = {}
         newDeconstructedSeq['sequenceIdentifier'] = constructName
-        seq = self.returnDnaSequenceFromDeconstructedList(newDeconstructedList)
+        seq = self.return_dna_sequence_from_deconstructed_list(newDeconstructedList)
         newDeconstructedSeq['dnaSequence'] = str(seq)
         newDeconstructedSeq['deconstructedList'] = newDeconstructedList
         newDeconstructedSeq['coding'] = True
-        newDeconstructedSeq['peptideSequence'] = self.returnPeptideSequenceFromDeconstructedList(newDeconstructedSeq['deconstructedList'])
+        newDeconstructedSeq['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(newDeconstructedSeq['deconstructedList'])
         self.allDeconstructedSequences[constructName] = newDeconstructedSeq
         self.allConstructs[constructName] = newDeconstructedSeq
 
-    def makeNewDeconstructedSequenceFromDeconstructedSequencePeptideRange(self, deconstructedSeq, start, end, name):
+    def make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(self, deconstructedSeq, start, end, name):
         deconstructedRange = []
         i = 0
         for item in deconstructedSeq['deconstructedList']:
@@ -148,15 +148,15 @@ class SequenceTools:
                 deconstructedRange.append(item)
         newDeconstructedSeq = {}
         newDeconstructedSeq['sequenceIdentifier'] = name
-        seq = self.returnDnaSequenceFromDeconstructedList(deconstructedRange)
+        seq = self.return_dna_sequence_from_deconstructed_list(deconstructedRange)
         newDeconstructedSeq['dnaSequence'] = str(seq)
         newDeconstructedSeq['deconstructedList'] = deconstructedRange
         newDeconstructedSeq['coding'] = True
-        newDeconstructedSeq['peptideSequence'] = self.returnPeptideSequenceFromDeconstructedList(newDeconstructedSeq['deconstructedList'])
+        newDeconstructedSeq['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(newDeconstructedSeq['deconstructedList'])
         self.allDeconstructedSequences[name] = newDeconstructedSeq
         self.allConstructs[name] = newDeconstructedSeq
 
-    def backTranslateDnaCodonMinimalNucelotideChanges(self, beforeDnaCodon, desiredAminoAcid):
+    def back_translate_dna_codon_minimal_nucelotide_changes(self, beforeDnaCodon, desiredAminoAcid):
         standardTable = CodonTable.unambiguous_dna_by_id[1]
         possibleCodons = []
         codonScores = {}
@@ -178,31 +178,27 @@ class SequenceTools:
             if bestCodonScore == codonScores[codon]:
                 return Seq(codon)
 
-
-
-
-
-    def returnDnaSequenceFromDeconstructedList(self, deconstructedList):
+    def return_dna_sequence_from_deconstructed_list(self, deconstructedList):
         seq = Seq('')
         for item in deconstructedList:
             seq += item['dna']
         return seq
 
-    def returnPeptideSequenceFromDeconstructedList(self, deconstructedList):
+    def return_peptide_sequence_from_deconstructed_list(self, deconstructedList):
         seq = Seq('')
         for item in deconstructedList:
             if item['coding']:
                 seq += item['peptide']
         return seq
 
-    def returnPeptideSequenceRangeFromDeconstructedList(self, deconstructedList, start, end):
+    def return_peptide_sequence_range_from_deconstructed_list(self, deconstructedList, start, end):
         seq = Seq('')
         for item in deconstructedList:
             if item['peptidePosition'] >= start and item['peptidePosition'] <= end:
                 seq += Seq(item['peptide'])
         return seq
 
-    def importSeqeuenceByNCBIIdentifier(self, ncbiSequenceIdentifier):
+    def import_sequence_by_ncbi_identifier(self, ncbiSequenceIdentifier):
         if isinstance(ncbiSequenceIdentifier, str):
             eSearchHandle = Entrez.esearch(db="nucleotide", term=ncbiSequenceIdentifier)
             eSearchRecord = Entrez.read(eSearchHandle)
@@ -215,7 +211,7 @@ class SequenceTools:
                     self.allEFetchRecords[ncbiSequenceIdentifier] = result
                     self.allSequences[ncbiSequenceIdentifier] = result['GBSeq_sequence']
 
-    def compareSequence(self, seq1, seq2):
+    def compare_sequence(self, seq1, seq2):
         zipped = zip(seq1.lower(), seq2.lower())
         zipList = list(zipped)
         for i in range(0, len(zipList)):
@@ -223,7 +219,7 @@ class SequenceTools:
                 return False, i, zipList[i][0], zipList[i][1]
         return True
 
-    def compareDNAConstructToSequence(self, construct, seq2):
+    def compare_dna_construct_to_sequence(self, construct, seq2):
         zipped = zip(construct['dnaSequence'].lower(), seq2.lower())
         zipList = list(zipped)
         for i in range(0, len(zipList)):
@@ -231,7 +227,7 @@ class SequenceTools:
                 return False, i, zipList[i][0], zipList[i][1], construct['deconstructedList'][i//3]['sequenceName']
         return True
 
-    def comparePeptideConstructToSequence(self, construct, seq2):
+    def compare_peptide_construct_to_sequence(self, construct, seq2):
         zipped = zip(construct['peptideSequence'].lower(), seq2.lower())
         zipList = list(zipped)
         for i in range(0, len(zipList)):
@@ -239,13 +235,13 @@ class SequenceTools:
                 return False, i, zipList[i][0], zipList[i][1], construct['deconstructedList'][i]['sequenceName']
         return True
 
-    def createSeqObjectFromString(self, seq):
+    def create_seq_object_from_string(self, seq):
         #remove whitespace
         seqWithoutWhitespace = ''.join(seq.split())
         seqObj = Seq(seqWithoutWhitespace)
         return seqObj.lower()
 
-    def createConstructFromDeconstructedSequences(self, deconstructedSequenceNames, constructName):
+    def create_construct_from_deconstructed_sequences(self, deconstructedSequenceNames, constructName):
         i = 0
         constructDict = {}
         constructDict['name'] = constructName
@@ -268,8 +264,8 @@ class SequenceTools:
                     item['dnaEndPosition'] = i
                     i+=1
                     constructDict['deconstructedList'].append(item)
-        constructDict['dnaSequence']  = self.returnDnaSequenceFromDeconstructedList(constructDict['deconstructedList'])
-        constructDict['peptideSequence'] = self.returnPeptideSequenceFromDeconstructedList(constructDict['deconstructedList'])
+        constructDict['dnaSequence']  = self.return_dna_sequence_from_deconstructed_list(constructDict['deconstructedList'])
+        constructDict['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(constructDict['deconstructedList'])
         self.allConstructs[constructName] = constructDict
 
 

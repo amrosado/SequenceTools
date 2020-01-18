@@ -1,49 +1,49 @@
 from SequenceTools import SequenceTools
 
 tools = SequenceTools(email="arosado@gatech.edu")
-tools.importSeqeuenceByNCBIIdentifier("AJ278965.1")
-tools.deconstructImportedCDNASequence(tools.allSequences["AJ278965.1"], "AJ278965.1", maxPeptideLength=306)
-tools.makeNewDeconstructedSequenceFromDeconstructedSequencePeptideRange(tools.allDeconstructedSequences["AJ278965.1"], 38, 246, "CD80_Extracellular")
-dnaSeq = tools.returnDnaSequenceFromDeconstructedList(tools.allDeconstructedSequences["CD80_Extracellular"]['deconstructedList'])
-dnaSeq2 = tools.createSeqObjectFromString("GTTTCCGTGGAGACGCAAGCTTATTTCAATGGGACTGCATATCTGCCGTGCCCAT TTACAAAGGCTCAAAACATAAGCCTGAGTGAGCTGGTAGTATTTTGGCAGGACCAGCAAA AGTTGGTTCTGTACGAGCACTATTTGGGCACAGAGAAACTTGATAGTGTGAATGCCAAGT ACCTGGGCCGCACGAGCTTTGACAGGAACAACTGGACTCTACGACTTCACAATGTTCAGA TCAAGGACATGGGCTCGTATGATTGTTTTATACAAAAAAAGCCACCCACAGGATCAATTA TCCTCCAACAGACATTAACAGAACTGTCAGTGATCGCCAACTTCAGTGAACCTGAAATAA AACTGGCTCAGAATGTAACAGGAAATTCTGGCATAAATTTGACCTGCACGTCTAAGCAAG GTCACCCGAAACCTAAGAAGATGTATTTTCTGATAACTAATTCAACTAATGAGTATGGTG ATAACATGCAGATATCACAAGATAATGTCACAGAACTGTTCAGTATCTCCAACAGCCTCT CTCTTTCATTCCCGGATGGTGTGTGGCATATGACCGTTGTGTGTGTTCTGGAAACGGAGT CAATGAAGATTTCCTCCAAACCTCTCAATTTCACTCAAGAGTTTCCATCTCCTCAAACGT ATTGGAAG")
+tools.import_sequence_by_ncbi_identifier("AJ278965.1")
+tools.deconstruct_imported_cdna_sequence(tools.allSequences["AJ278965.1"], "AJ278965.1", maxPeptideLength=306)
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.allDeconstructedSequences["AJ278965.1"], 38, 246, "CD80_Extracellular")
+dnaSeq = tools.return_dna_sequence_from_deconstructed_list(tools.allDeconstructedSequences["CD80_Extracellular"]['deconstructedList'])
+dnaSeq2 = tools.create_seq_object_from_string("GTTTCCGTGGAGACGCAAGCTTATTTCAATGGGACTGCATATCTGCCGTGCCCAT TTACAAAGGCTCAAAACATAAGCCTGAGTGAGCTGGTAGTATTTTGGCAGGACCAGCAAA AGTTGGTTCTGTACGAGCACTATTTGGGCACAGAGAAACTTGATAGTGTGAATGCCAAGT ACCTGGGCCGCACGAGCTTTGACAGGAACAACTGGACTCTACGACTTCACAATGTTCAGA TCAAGGACATGGGCTCGTATGATTGTTTTATACAAAAAAAGCCACCCACAGGATCAATTA TCCTCCAACAGACATTAACAGAACTGTCAGTGATCGCCAACTTCAGTGAACCTGAAATAA AACTGGCTCAGAATGTAACAGGAAATTCTGGCATAAATTTGACCTGCACGTCTAAGCAAG GTCACCCGAAACCTAAGAAGATGTATTTTCTGATAACTAATTCAACTAATGAGTATGGTG ATAACATGCAGATATCACAAGATAATGTCACAGAACTGTTCAGTATCTCCAACAGCCTCT CTCTTTCATTCCCGGATGGTGTGTGGCATATGACCGTTGTGTGTGTTCTGGAAACGGAGT CAATGAAGATTTCCTCCAAACCTCTCAATTTCACTCAAGAGTTTCCATCTCCTCAAACGT ATTGGAAG")
 
-nhe1Seq = tools.createSeqObjectFromString("GCTAGC")
-tools.deconstructDNASequence(nhe1Seq, "NheI", False)
+nhe1Seq = tools.create_seq_object_from_string("GCTAGC")
+tools.deconstruct_dna_sequence(nhe1Seq, "NheI", False)
 
-ecoR1Seq = tools.createSeqObjectFromString("GAATTC")
-tools.deconstructDNASequence(ecoR1Seq, "EcoRI", False)
+ecoR1Seq = tools.create_seq_object_from_string("GAATTC")
+tools.deconstruct_dna_sequence(ecoR1Seq, "EcoRI", False)
 
-seqPeptideSeq = tools.createSeqObjectFromString("ATGGGGATCCTTCCCAGCCCTGGGATGCCTGCGCTGCTCTCCCTCGTGAGCCTTCTCTCCGTGCTGCTGATGGGTTGCGTAGCT")
-tools.deconstructDNASequence(seqPeptideSeq, "SecretionSignal", True)
+seqPeptideSeq = tools.create_seq_object_from_string("ATGGGGATCCTTCCCAGCCCTGGGATGCCTGCGCTGCTCTCCCTCGTGAGCCTTCTCTCCGTGCTGCTGATGGGTTGCGTAGCT")
+tools.deconstruct_dna_sequence(seqPeptideSeq, "SecretionSignal", True)
 
-linker1Seq = tools.createSeqObjectFromString("GGTACCGGA")
-tools.deconstructDNASequence(linker1Seq, "Linker1", True)
+linker1Seq = tools.create_seq_object_from_string("GGTACCGGA")
+tools.deconstruct_dna_sequence(linker1Seq, "Linker1", True)
 
-linker2Seq = tools.createSeqObjectFromString("GGTAGTGGTGGTAGTGGT")
-tools.deconstructDNASequence(linker2Seq, "Linker2", True)
+linker2Seq = tools.create_seq_object_from_string("GGTAGTGGTGGTAGTGGT")
+tools.deconstruct_dna_sequence(linker2Seq, "Linker2", True)
 
-apTagSeq = tools.createSeqObjectFromString("GGTCTGAATGATATTTTCGAAGCGCAGAAAATTGAATGGCATGAA")
-tools.deconstructDNASequence(apTagSeq, "APTag", True)
+apTagSeq = tools.create_seq_object_from_string("GGTCTGAATGATATTTTCGAAGCGCAGAAAATTGAATGGCATGAA")
+tools.deconstruct_dna_sequence(apTagSeq, "APTag", True)
 
-linker3eq = tools.createSeqObjectFromString("GGTAGCGGA")
-tools.deconstructDNASequence(linker3eq, "Linker3", True)
+linker3eq = tools.create_seq_object_from_string("GGTAGCGGA")
+tools.deconstruct_dna_sequence(linker3eq, "Linker3", True)
 
-tevSeq = tools.createSeqObjectFromString("GAGAACCTATACTTCCAAGGA")
-tools.deconstructDNASequence(tevSeq, "TEV", True)
+tevSeq = tools.create_seq_object_from_string("GAGAACCTATACTTCCAAGGA")
+tools.deconstruct_dna_sequence(tevSeq, "TEV", True)
 
-hisTagSeq = tools.createSeqObjectFromString("CACCACCATCATCACCAC")
-tools.deconstructDNASequence(hisTagSeq, "HIS", True)
+hisTagSeq = tools.create_seq_object_from_string("CACCACCATCATCACCAC")
+tools.deconstruct_dna_sequence(hisTagSeq, "HIS", True)
 
-stopCodonsSeq = tools.createSeqObjectFromString("TAGTAA")
-tools.deconstructDNASequence(stopCodonsSeq, "STOPS", True)
+stopCodonsSeq = tools.create_seq_object_from_string("TAGTAA")
+tools.deconstruct_dna_sequence(stopCodonsSeq, "STOPS", True)
 
-cd80ExtracellularPeptideSequence = tools.createSeqObjectFromString('VDEQLSKSVKDKVLLPCRYNSPHEDESEDRIYWQKHDKVVLSVIAGKLKVWPEYKNRTLYDNTTYSLIILGLVLSDRGTYSCVVQKKERGTYEVKHLALVKLSIKADFSTPNITESGNPSADTKRITCFASGGFPKPRFSWLENGRELPGINTTISQDPESELYTISSQLDFNTTRNHTIKCLIKYGDAHVSEDFTWEKPPEDPPDSKN')
+cd80ExtracellularPeptideSequence = tools.create_seq_object_from_string('VDEQLSKSVKDKVLLPCRYNSPHEDESEDRIYWQKHDKVVLSVIAGKLKVWPEYKNRTLYDNTTYSLIILGLVLSDRGTYSCVVQKKERGTYEVKHLALVKLSIKADFSTPNITESGNPSADTKRITCFASGGFPKPRFSWLENGRELPGINTTISQDPESELYTISSQLDFNTTRNHTIKCLIKYGDAHVSEDFTWEKPPEDPPDSKN')
 
-tools.createConstructFromDeconstructedSequences(['SecretionSignal', 'Linker1', 'CD80_Extracellular', "Linker2", 'APTag', 'Linker3', 'TEV', 'HIS','STOPS'], 'CD80Extracellular-APTag-TEV-HIS')
-tools.createConstructFromDeconstructedSequences(['NheI' ,'SecretionSignal', 'Linker1', 'CD80_Extracellular', "Linker2", 'APTag', 'Linker3', 'TEV', 'HIS','STOPS', 'EcoRI'], 'NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI')
+tools.create_construct_from_deconstructed_sequences(['SecretionSignal', 'Linker1', 'CD80_Extracellular', "Linker2", 'APTag', 'Linker3', 'TEV', 'HIS', 'STOPS'], 'CD80Extracellular-APTag-TEV-HIS')
+tools.create_construct_from_deconstructed_sequences(['NheI' , 'SecretionSignal', 'Linker1', 'CD80_Extracellular', "Linker2", 'APTag', 'Linker3', 'TEV', 'HIS', 'STOPS', 'EcoRI'], 'NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI')
 
-cd80PeptideSequence = tools.createSeqObjectFromString('MACNCQLMQDTPLLKFPCPRLILLFVLLIRLSQVSSDVDEQLSKSVKDKVLLPCRYNSPHEDESEDRIYWQKHDKVVLSVIAGKLKVWPEYKNRTLYDNTTYSLIILGLVLSDRGTYSCVVQKKERGTYEVKHLALVKLSIKADFSTPNITESGNPSADTKRITCFASGGFPKPRFSWLENGRELPGINTTISQDPESELYTISSQLDFNTTRNHTIKCLIKYGDAHVSEDFTWEKPPEDPPDSKNTLVLFGAGFGAVITVVVIVVIIKCFCKHRSCFRRNEASRETNNSLTFGPEEALAEQTVFL')
-genScriptSeq = tools.createSeqObjectFromString('''
+cd80PeptideSequence = tools.create_seq_object_from_string('MACNCQLMQDTPLLKFPCPRLILLFVLLIRLSQVSSDVDEQLSKSVKDKVLLPCRYNSPHEDESEDRIYWQKHDKVVLSVIAGKLKVWPEYKNRTLYDNTTYSLIILGLVLSDRGTYSCVVQKKERGTYEVKHLALVKLSIKADFSTPNITESGNPSADTKRITCFASGGFPKPRFSWLENGRELPGINTTISQDPESELYTISSQLDFNTTRNHTIKCLIKYGDAHVSEDFTWEKPPEDPPDSKNTLVLFGAGFGAVITVVVIVVIIKCFCKHRSCFRRNEASRETNNSLTFGPEEALAEQTVFL')
+genScriptSeq = tools.create_seq_object_from_string('''
 GCTAGCATGGGGATCCTTCCCAGCCCTGGGATGCCTGCGCTGCTCTCCCTCGTGAGCCTTCTCTCCGTGCTGCTGATGGGTTGCGTAGCTGGTAC
 CGGAGTTGATGAACAACTGTCCAAGTCAGTGAAAGATAAGGTATTGCTGCCTTGCCGTTACAACTCTCCTCATGAAGATGAGTCTGAAGACCGAATCTAC
 TGGCAAAAACATGACAAAGTGGTGCTGTCTGTCATTGCTGGGAAACTAAAAGTGTGGCCCGAGTATAAGAACCGGACTTTATATGACAACACTACCTACT
@@ -55,7 +55,7 @@ ACCCCCAGAAGACCCTCCTGATAGCAAGAACGGTAGTGGTGGTAGTGGTGGTCTGAATGATATTTTCGAAGCGCAGAAAA
 GGAGAGAACCTATACTTCCAAGGACACCACCATCATCACCACTAGTAAGAATTC
 ''')
 
-genScriptSeq2 = tools.createSeqObjectFromString('''
+genScriptSeq2 = tools.create_seq_object_from_string('''
 GCTAGCATGGGGATCCTTCCCAGCCCTGGGATGCCTGCGCTGCTCTCCCTCGTGAGCCTTCTCTCCGTGCTGCTGATGGGTTGCGTAGCTGGTAC
 CGGAGTTGATGAACAACTGTCCAAGTCAGTGAAAGATAAGGTATTGCTGCCTTGCCGTTACAACTCTCCTCATGAAGATGAGTCTGAAGACCGAATCTAC
 TGGCAAAAACATGACAAAGTGGTGCTGTCTGTCATTGCTGGGAAACTAAAAGTGTGGCCCGAGTATAAGAACCGGACTTTATATGACAACACTACCTACT
@@ -67,7 +67,7 @@ ACCCCCAGAAGACCCTCCTGATAGCAAGAACGGTAGTGGTGGTAGTGGTGGTCTGAATGATATTTTCGAAGCGCAGAAAA
 GGAGAGAACCTATACTTCCAAGGACACCACCATCATCACCACTAGTAAGAATTC
 ''')
 
-genScriptSeq3 = tools.createSeqObjectFromString('''
+genScriptSeq3 = tools.create_seq_object_from_string('''
 GCTAGCATGGGGATCCTTCCCAGCCCTGGGATGCCTGCGCTGCTCTCCCTCGTGAGCCTTCTCTCCGTGCTGCTGATGGGTTGCGTAGCTGGTAC
 CGGAGTTGATGAACAACTGTCCAAGTCAGTGAAAGATAAGGTATTGCTGCCTTGCCGTTACAACTCTCCTCATGAAGATGAGTCTGAAGACCGAGACTAC
 TGGCAAAAACATGACAAAGTGGTGCTGTCTGTCATTGCTGGGAAACTAAAAGTGTGGCCCGAGTATAAGAACCGGACTTTATATGACAACACTACCTACT
@@ -79,11 +79,11 @@ ACCCCCAGAAGACCCTCCTGATAGCAAGAACGGTAGTGGTGGTAGTGGTGGTCTGAATGATATTTTCGAAGCGCAGAAAA
 GGAGAGAACCTATACTTCCAAGGACACCACCATCATCACCACTAGTAAGAATTC
 ''')
 
-compare1 = tools.comparePeptideConstructToSequence(tools.allConstructs['CD80_Extracellular'], cd80ExtracellularPeptideSequence)
-compare2 = tools.comparePeptideConstructToSequence(tools.allConstructs['AJ278965.1'], cd80PeptideSequence)
-compareGenScript = tools.compareDNAConstructToSequence(tools.allConstructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq)
-compareGenScript2 = tools.compareDNAConstructToSequence(tools.allConstructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq2)
-compareGenScript3 = tools.compareDNAConstructToSequence(tools.allConstructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq3)
+compare1 = tools.compare_peptide_construct_to_sequence(tools.allConstructs['CD80_Extracellular'], cd80ExtracellularPeptideSequence)
+compare2 = tools.compare_peptide_construct_to_sequence(tools.allConstructs['AJ278965.1'], cd80PeptideSequence)
+compareGenScript = tools.compare_dna_construct_to_sequence(tools.allConstructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq)
+compareGenScript2 = tools.compare_dna_construct_to_sequence(tools.allConstructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq2)
+compareGenScript3 = tools.compare_dna_construct_to_sequence(tools.allConstructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq3)
 
 translated = genScriptSeq2.translate()
 
