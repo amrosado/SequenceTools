@@ -4,15 +4,15 @@ from Bio.Alphabet import generic_dna, IUPAC
 from Bio.Data import CodonTable
 
 class SequenceTools:
-    currentSequence = None
+    current_sequence = None
 
-    allSequences = None
+    all_sequences = None
 
-    allDeconstructedSequences = None
+    all_deconstructed_sequences = None
 
-    allEFetchRecords = None
+    all_efetch_records = None
 
-    allConstructs = None
+    all_constructs = None
 
     def return_first_coding_sequence(self, seq, maxPeptideLength=None, minPeptideLength=None):
         start = None
@@ -49,13 +49,13 @@ class SequenceTools:
                     peptideDNASeq = startToEnd[:(i+1)*3]
         return peptideDNASeq
 
-    def deconstruct_imported_cdna_sequence(self, sequence, sequenceIdentifier, maxPeptideLength=None, minPeptideLength=None):
+    def deconstruct_imported_cdna_sequence(self, sequence, sequence_identifier, maxPeptideLength=None, minPeptideLength=None):
         seq = Seq(sequence)
         codingSeq = self.return_first_coding_sequence(seq, maxPeptideLength, minPeptideLength)
         protein = codingSeq.translate(CodonTable.unambiguous_dna_by_id[1])
         deconstructedDict = {}
         deconstructedDict['coding'] = True
-        deconstructedDict['sequenceIdentifier'] = sequenceIdentifier
+        deconstructedDict['sequenceIdentifier'] = sequence_identifier
         deconstructedDict['dnaSequence'] = codingSeq
         deconstructedDict['peptideSequence'] = Seq('')
         deconstructedDict['deconstructedList'] = []
@@ -68,17 +68,17 @@ class SequenceTools:
             codonDict['dnaStartPosition'] = i*3+1
             codonDict['dnaEndPosition'] = (i+1)*3
             codonDict['coding'] = True
-            codonDict['sequenceName'] = sequenceIdentifier
+            codonDict['sequenceName'] = sequence_identifier
             deconstructedDict['deconstructedList'].append(codonDict)
-        self.allDeconstructedSequences[sequenceIdentifier] = deconstructedDict
-        self.allConstructs[sequenceIdentifier] = deconstructedDict
+        self.all_deconstructed_sequences[sequence_identifier] = deconstructedDict
+        self.all_constructs[sequence_identifier] = deconstructedDict
 
-    def deconstruct_dna_sequence(self, sequence, sequenceIdentifier, coding):
+    def deconstruct_dna_sequence(self, sequence, sequence_identifier, coding):
         if coding:
             protein = sequence.translate(CodonTable.unambiguous_dna_by_id[1])
             deconstructedDict = {}
             deconstructedDict['coding'] = coding
-            deconstructedDict['sequenceIdentifier'] = sequenceIdentifier
+            deconstructedDict['sequenceIdentifier'] = sequence_identifier
             deconstructedDict['dnaSequence'] = sequence
             deconstructedDict['deconstructedList'] = []
             deconstructedDict['peptideSequence'] = Seq('')
@@ -91,12 +91,12 @@ class SequenceTools:
                 codonDict['peptidePosition'] = i+1
                 codonDict['dnaStartPosition'] = i*3+1
                 codonDict['dnaEndPosition'] = (i+1)*3
-                codonDict['sequenceName'] = sequenceIdentifier
+                codonDict['sequenceName'] = sequence_identifier
                 deconstructedDict['deconstructedList'].append(codonDict)
         else:
             deconstructedDict = {}
             deconstructedDict['coding'] = coding
-            deconstructedDict['sequenceIdentifier'] = sequenceIdentifier
+            deconstructedDict['sequenceIdentifier'] = sequence_identifier
             deconstructedDict['dnaSequence'] = sequence
             deconstructedDict['deconstructedList'] = []
             for i in range(0, len(sequence)):
@@ -105,11 +105,11 @@ class SequenceTools:
                 codeDict['coding'] = False
                 codeDict['dnaStartPosition'] = i+1
                 codeDict['dnaEndPosition'] = i+1
-                codeDict['sequenceName'] = sequenceIdentifier
+                codeDict['sequenceName'] = sequence_identifier
                 deconstructedDict['deconstructedList'].append(codeDict)
 
 
-        self.allDeconstructedSequences[sequenceIdentifier] = deconstructedDict
+        self.all_deconstructed_sequences[sequence_identifier] = deconstructedDict
 
     def make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(self, deconstructedSeq, constructName, positionToMutate, beforeAminoAcid, afterAminoAcid):
         newDeconstructedList = []
@@ -132,8 +132,8 @@ class SequenceTools:
         newDeconstructedSeq['deconstructedList'] = newDeconstructedList
         newDeconstructedSeq['coding'] = True
         newDeconstructedSeq['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(newDeconstructedSeq['deconstructedList'])
-        self.allDeconstructedSequences[constructName] = newDeconstructedSeq
-        self.allConstructs[constructName] = newDeconstructedSeq
+        self.all_deconstructed_sequences[constructName] = newDeconstructedSeq
+        self.all_constructs[constructName] = newDeconstructedSeq
 
     def make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(self, deconstructedSeq, start, end, name):
         deconstructedRange = []
@@ -153,19 +153,34 @@ class SequenceTools:
         newDeconstructedSeq['deconstructedList'] = deconstructedRange
         newDeconstructedSeq['coding'] = True
         newDeconstructedSeq['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(newDeconstructedSeq['deconstructedList'])
-        self.allDeconstructedSequences[name] = newDeconstructedSeq
-        self.allConstructs[name] = newDeconstructedSeq
+        self.all_deconstructed_sequences[name] = newDeconstructedSeq
+        self.all_constructs[name] = newDeconstructedSeq
 
-    def back_translate_dna_codon_minimal_nucelotide_changes(self, beforeDnaCodon, desiredAminoAcid):
+    def back_translate_amino_acid_sequence(self, desired_amino_acid_seq):
+        dna_seq = Seq()
+
+        for i in desired_amino_acid_seq:
+            dna_seq += self.back_translate_amino_acid_to_codon(i)
+
+        return dna_seq
+
+    def back_translate_amino_acid_to_codon(self, desired_amino_acid):
+        standard_table = CodonTable.unambiguous_dna_by_id[1]
+
+        for forward_codon in standard_table.forward_table:
+            if standard_table.forward_table[forward_codon] == desired_amino_acid:
+                return Seq(standard_table[forward_codon])
+
+    def back_translate_dna_codon_minimal_nucelotide_changes(self, before_dna_codon, desired_amino_acid):
         standardTable = CodonTable.unambiguous_dna_by_id[1]
         possibleCodons = []
         codonScores = {}
         bestCodonScore = 0
         for forwardCodon in standardTable.forward_table:
-            if standardTable.forward_table[forwardCodon] == desiredAminoAcid:
+            if standardTable.forward_table[forwardCodon] == desired_amino_acid:
                 possibleCodons.append(forwardCodon)
         for possibleCodon in possibleCodons:
-            zipped = zip(beforeDnaCodon.upper(), possibleCodon)
+            zipped = zip(before_dna_codon.upper(), possibleCodon)
             score = 0
             for zippedItem in zipped:
                 if zippedItem[0] == zippedItem[1]:
@@ -191,6 +206,18 @@ class SequenceTools:
                 seq += item['peptide']
         return seq
 
+    def insert_sequence_into_peptide_position(self, deconstructed_list_name, insert_deconstructed_list_name, new_list_name, insert_start_position):
+        list_to_insert_into = self.all_deconstructed_sequences[deconstructed_list_name].copy()
+        insert_list = self.all_deconstructed_sequences[insert_deconstructed_list_name].copy()
+
+        for i in insert_list['deconstructedList']:
+            for j in range(insert_start_position, len(insert_list['deconstructedList'])):
+                list_to_insert_into['deconstructedList'].insert(j, i)
+
+        dna_seq = self.return_dna_sequence_from_deconstructed_list(list_to_insert_into['deconstructedList'])
+
+        self.deconstruct_dna_sequence(dna_seq, new_list_name, True)
+
     def return_peptide_sequence_range_from_deconstructed_list(self, deconstructedList, start, end):
         seq = Seq('')
         for item in deconstructedList:
@@ -208,8 +235,8 @@ class SequenceTools:
                 eFetchRecord = Entrez.read(eFetchHandle)
                 eFetchHandle.close()
                 for result in eFetchRecord:
-                    self.allEFetchRecords[ncbiSequenceIdentifier] = result
-                    self.allSequences[ncbiSequenceIdentifier] = result['GBSeq_sequence']
+                    self.all_efetch_records[ncbiSequenceIdentifier] = result
+                    self.all_sequences[ncbiSequenceIdentifier] = result['GBSeq_sequence']
 
     def compare_sequence(self, seq1, seq2):
         zipped = zip(seq1.lower(), seq2.lower())
@@ -249,9 +276,9 @@ class SequenceTools:
         constructDict['deconstructedComponents'] = []
         constructDict['deconstructedList'] = []
         for name in deconstructedSequenceNames:
-            deconstuctedSeq = self.allDeconstructedSequences[name]
+            deconstuctedSeq = self.all_deconstructed_sequences[name]
             constructDict['deconstructedComponents'].append(deconstuctedSeq)
-            if self.allDeconstructedSequences[name]['coding']:
+            if self.all_deconstructed_sequences[name]['coding']:
                 for item in deconstuctedSeq['deconstructedList']:
                     item['peptidePosition'] = i/3+1
                     item['dnaStartPosition'] = i+1
@@ -266,7 +293,7 @@ class SequenceTools:
                     constructDict['deconstructedList'].append(item)
         constructDict['dnaSequence']  = self.return_dna_sequence_from_deconstructed_list(constructDict['deconstructedList'])
         constructDict['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(constructDict['deconstructedList'])
-        self.allConstructs[constructName] = constructDict
+        self.all_constructs[constructName] = constructDict
 
 
     def __init__(self, apiKey=None, email=None):
@@ -276,8 +303,8 @@ class SequenceTools:
         if email:
             Entrez.email = email
 
-        self.allSequences = {}
+        self.all_sequences = {}
         self.allESearchRecords = {}
-        self.allEFetchRecords = {}
-        self.allDeconstructedSequences = {}
-        self.allConstructs = {}
+        self.all_efetch_records = {}
+        self.all_deconstructed_sequences = {}
+        self.all_constructs = {}

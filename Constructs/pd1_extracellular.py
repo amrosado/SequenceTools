@@ -2,9 +2,9 @@ from SequenceTools import SequenceTools
 
 tools = SequenceTools(email="arosado@gatech.edu")
 tools.import_sequence_by_ncbi_identifier("NM_008798.2")
-tools.deconstruct_imported_cdna_sequence(tools.allSequences["NM_008798.2"], "NM_008798.2", 288)
-tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.allDeconstructedSequences["NM_008798.2"], 25, 169, "PD1_Extracellular")
-dnaSeq = tools.return_dna_sequence_from_deconstructed_list(tools.allDeconstructedSequences["PD1_Extracellular"]['deconstructedList'])
+tools.deconstruct_imported_cdna_sequence(tools.all_sequences["NM_008798.2"], "NM_008798.2", 288)
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_deconstructed_sequences["NM_008798.2"], 25, 169, "PD1_Extracellular")
+dnaSeq = tools.return_dna_sequence_from_deconstructed_list(tools.all_deconstructed_sequences["PD1_Extracellular"]['deconstructedList'])
 
 nhe1Seq = tools.create_seq_object_from_string("GCTAGC")
 tools.deconstruct_dna_sequence(nhe1Seq, "NheI", False)
@@ -44,7 +44,7 @@ tools.create_construct_from_deconstructed_sequences(['NheI' , 'SecretionSignal',
 pd1PeptideSequence = tools.create_seq_object_from_string('MWVRQVPWSFTWAVLQLSWQSGWLLEVPNGPWRSLTFYPAWLTVSEGANATFTCSLSNWSEDLMLNWNRLSPSNQTEKQAAFCNGLSQPVQDARFQIIQLPNRHDFHMNILDTRRNDSGIYLCGAISLHPKAKIEESPGAELVVTERILETSTRYPSPSPKPEGRFQGMVIGIMSALVGIPVLLLLAWALAVFCSTSMSEARGAGSKDDTLKEEPSAAPVPSVAYEELDFQGREKTPELPTACVHTEYATIVFTEGLGASAMGRRGSADGLQGPRPPRHEDGHCSWPL')
 
 
-compare1 = tools.compare_peptide_construct_to_sequence(tools.allConstructs['PD1_Extracellular'], pd1ExtracellularPeptideSequence)
-compare2 = tools.compare_peptide_construct_to_sequence(tools.allConstructs['NM_008798.2'], pd1PeptideSequence)
+compare1 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['PD1_Extracellular'], pd1ExtracellularPeptideSequence)
+compare2 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['NM_008798.2'], pd1PeptideSequence)
 
 pass

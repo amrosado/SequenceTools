@@ -32,7 +32,7 @@ AGTGCTAAAAGCGCCAACAAAAACAAGAAAAACAAGGATAAGGAGTATTACGTCTGA
 """)
 tools.deconstruct_dna_sequence(nrx1b, "NRX1B_SS4IN", True)
 
-tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.allDeconstructedSequences["NRX1B_SS4IN"], 47, 392, "NRX1B_SS4IN_ExC")
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_deconstructed_sequences["NRX1B_SS4IN"], 47, 392, "NRX1B_SS4IN_ExC")
 
 ecoR1Seq = tools.create_seq_object_from_string("GAATTC")
 tools.deconstruct_dna_sequence(ecoR1Seq, "EcoRI", False)

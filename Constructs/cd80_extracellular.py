@@ -2,9 +2,9 @@ from SequenceTools import SequenceTools
 
 tools = SequenceTools(email="arosado@gatech.edu")
 tools.import_sequence_by_ncbi_identifier("AJ278965.1")
-tools.deconstruct_imported_cdna_sequence(tools.allSequences["AJ278965.1"], "AJ278965.1", maxPeptideLength=306)
-tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.allDeconstructedSequences["AJ278965.1"], 38, 246, "CD80_Extracellular")
-dnaSeq = tools.return_dna_sequence_from_deconstructed_list(tools.allDeconstructedSequences["CD80_Extracellular"]['deconstructedList'])
+tools.deconstruct_imported_cdna_sequence(tools.all_sequences["AJ278965.1"], "AJ278965.1", maxPeptideLength=306)
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_deconstructed_sequences["AJ278965.1"], 38, 246, "CD80_Extracellular")
+dnaSeq = tools.return_dna_sequence_from_deconstructed_list(tools.all_deconstructed_sequences["CD80_Extracellular"]['deconstructedList'])
 dnaSeq2 = tools.create_seq_object_from_string("GTTTCCGTGGAGACGCAAGCTTATTTCAATGGGACTGCATATCTGCCGTGCCCAT TTACAAAGGCTCAAAACATAAGCCTGAGTGAGCTGGTAGTATTTTGGCAGGACCAGCAAA AGTTGGTTCTGTACGAGCACTATTTGGGCACAGAGAAACTTGATAGTGTGAATGCCAAGT ACCTGGGCCGCACGAGCTTTGACAGGAACAACTGGACTCTACGACTTCACAATGTTCAGA TCAAGGACATGGGCTCGTATGATTGTTTTATACAAAAAAAGCCACCCACAGGATCAATTA TCCTCCAACAGACATTAACAGAACTGTCAGTGATCGCCAACTTCAGTGAACCTGAAATAA AACTGGCTCAGAATGTAACAGGAAATTCTGGCATAAATTTGACCTGCACGTCTAAGCAAG GTCACCCGAAACCTAAGAAGATGTATTTTCTGATAACTAATTCAACTAATGAGTATGGTG ATAACATGCAGATATCACAAGATAATGTCACAGAACTGTTCAGTATCTCCAACAGCCTCT CTCTTTCATTCCCGGATGGTGTGTGGCATATGACCGTTGTGTGTGTTCTGGAAACGGAGT CAATGAAGATTTCCTCCAAACCTCTCAATTTCACTCAAGAGTTTCCATCTCCTCAAACGT ATTGGAAG")
 
 nhe1Seq = tools.create_seq_object_from_string("GCTAGC")
@@ -79,11 +79,11 @@ ACCCCCAGAAGACCCTCCTGATAGCAAGAACGGTAGTGGTGGTAGTGGTGGTCTGAATGATATTTTCGAAGCGCAGAAAA
 GGAGAGAACCTATACTTCCAAGGACACCACCATCATCACCACTAGTAAGAATTC
 ''')
 
-compare1 = tools.compare_peptide_construct_to_sequence(tools.allConstructs['CD80_Extracellular'], cd80ExtracellularPeptideSequence)
-compare2 = tools.compare_peptide_construct_to_sequence(tools.allConstructs['AJ278965.1'], cd80PeptideSequence)
-compareGenScript = tools.compare_dna_construct_to_sequence(tools.allConstructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq)
-compareGenScript2 = tools.compare_dna_construct_to_sequence(tools.allConstructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq2)
-compareGenScript3 = tools.compare_dna_construct_to_sequence(tools.allConstructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq3)
+compare1 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['CD80_Extracellular'], cd80ExtracellularPeptideSequence)
+compare2 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['AJ278965.1'], cd80PeptideSequence)
+compareGenScript = tools.compare_dna_construct_to_sequence(tools.all_constructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq)
+compareGenScript2 = tools.compare_dna_construct_to_sequence(tools.all_constructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq2)
+compareGenScript3 = tools.compare_dna_construct_to_sequence(tools.all_constructs['NheI-CD80Extracellular-APTag-TEV-HIS-EcoRI'], genScriptSeq3)
 
 translated = genScriptSeq2.translate()
 
