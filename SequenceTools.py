@@ -3,6 +3,8 @@ from Bio.Seq import Seq
 from Bio.Alphabet import generic_dna, IUPAC
 from Bio.Data import CodonTable
 
+import copy
+
 class SequenceTools:
     current_sequence = None
 
@@ -84,10 +86,10 @@ class SequenceTools:
             deconstructedDict['peptideSequence'] = Seq('')
             for i in range(0, len(sequence)//3):
                 codonDict = {}
-                codonDict['peptide'] = protein[i]
+                codonDict['peptide'] = protein[i].lower()
                 codonDict['coding'] = coding
                 deconstructedDict['peptideSequence'] += Seq(protein[i])
-                codonDict['dna'] = sequence[i*3:(i+1)*3]
+                codonDict['dna'] = sequence[i*3:(i+1)*3].lower()
                 codonDict['peptidePosition'] = i+1
                 codonDict['dnaStartPosition'] = i*3+1
                 codonDict['dnaEndPosition'] = (i+1)*3
@@ -101,7 +103,7 @@ class SequenceTools:
             deconstructedDict['deconstructedList'] = []
             for i in range(0, len(sequence)):
                 codeDict = {}
-                codeDict['dna'] = sequence[i]
+                codeDict['dna'] = sequence[i].lower()
                 codeDict['coding'] = False
                 codeDict['dnaStartPosition'] = i+1
                 codeDict['dnaEndPosition'] = i+1
@@ -167,9 +169,7 @@ class SequenceTools:
     def back_translate_amino_acid_to_codon(self, desired_amino_acid):
         standard_table = CodonTable.unambiguous_dna_by_id[1]
 
-        for forward_codon in standard_table.forward_table:
-            if standard_table.forward_table[forward_codon] == desired_amino_acid:
-                return Seq(forward_codon)
+        return standard_table.back_table[desired_amino_acid]
 
     def back_translate_dna_codon_minimal_nucelotide_changes(self, before_dna_codon, desired_amino_acid):
         standardTable = CodonTable.unambiguous_dna_by_id[1]
@@ -207,12 +207,12 @@ class SequenceTools:
         return seq
 
     def insert_sequence_into_peptide_position(self, deconstructed_list_name, insert_deconstructed_list_name, new_list_name, insert_start_position):
-        list_to_insert_into = self.all_deconstructed_sequences[deconstructed_list_name].copy()
-        insert_list = self.all_deconstructed_sequences[insert_deconstructed_list_name].copy()
+        list_to_insert_into = copy.deepcopy(self.all_deconstructed_sequences[deconstructed_list_name])
+        insert_list_reverse = copy.deepcopy(self.all_deconstructed_sequences[insert_deconstructed_list_name])
+        insert_list_reverse['deconstructedList'].reverse()
 
-        for i in insert_list['deconstructedList']:
-            for j in range(insert_start_position, len(insert_list['deconstructedList'])):
-                list_to_insert_into['deconstructedList'].insert(j, i)
+        for j in insert_list_reverse['deconstructedList']:
+            list_to_insert_into['deconstructedList'].insert(insert_start_position, j)
 
         dna_seq = self.return_dna_sequence_from_deconstructed_list(list_to_insert_into['deconstructedList'])
 
