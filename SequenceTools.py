@@ -157,7 +157,7 @@ class SequenceTools:
         self.all_constructs[name] = newDeconstructedSeq
 
     def back_translate_amino_acid_sequence(self, desired_amino_acid_seq):
-        dna_seq = Seq()
+        dna_seq = Seq('')
 
         for i in desired_amino_acid_seq:
             dna_seq += self.back_translate_amino_acid_to_codon(i)
@@ -169,7 +169,7 @@ class SequenceTools:
 
         for forward_codon in standard_table.forward_table:
             if standard_table.forward_table[forward_codon] == desired_amino_acid:
-                return Seq(standard_table[forward_codon])
+                return Seq(forward_codon)
 
     def back_translate_dna_codon_minimal_nucelotide_changes(self, before_dna_codon, desired_amino_acid):
         standardTable = CodonTable.unambiguous_dna_by_id[1]

@@ -28,7 +28,13 @@ AGTGCTAAAAGCGCCAACAAAAACAAGAAAAACAAGGATAAGGAGTATTACGTCTGA
 """)
 tools.deconstruct_dna_sequence(nrx1b, "NRX1B_SS4IN", True)
 
-tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_deconstructed_sequences["NRX1B_SS4IN"], 47, 362, "NRX1B_SS4IN_ExC")
+back_translated_sequence = tools.back_translate_amino_acid_sequence("GNNDNERLAIARQRIPYRLGRVVDEWLLDK")
+
+tools.deconstruct_dna_sequence(nrx1b, "NRX1B_IN1", True)
+
+tools.insert_sequence_into_peptide_position("NRX1B_SS4IN", "NRX1B_IN1", "NRX1B_SS4IP1", 201)
+
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_deconstructed_sequences["NRX1B_SS4IP1"], 47, 392, "NRX1B_SS4IP1_ExC")
 
 ecoR1Seq = tools.create_seq_object_from_string("GAATTC")
 tools.deconstruct_dna_sequence(ecoR1Seq, "EcoRI", False)
@@ -62,8 +68,8 @@ tools.deconstruct_dna_sequence(stopCodonsSeq, "STOPS", True)
 
 # pd1ExtracellularPeptideSequence = tools.createSeqObjectFromString('LEVPNGPWRSLTFYPAWLTVSEGANATFTCSLSNWSEDLMLNWNRLSPSNQTEKQAAFCNGLSQPVQDARFQIIQLPNRHDFHMNILDTRRNDSGIYLCGAISLHPKAKIEESPGAELVVTERILETSTRYPSPSPKPEGRFQGM')
 
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal', 'Linker1', 'NRX1B_SS4IN_ExC', "Linker2", 'APTag', 'Linker3', 'TEV', 'GST', 'HIS', 'STOPS'], 'NRX1B_SS4IN_ExC-APTag-TEV-HIS-GST')
-tools.create_construct_from_deconstructed_sequences(['NheI', 'SecretionSignal', 'Linker1', 'NRX1B_SS4IN_ExC', "Linker2", 'APTag', 'Linker3', 'TEV', 'HIS', 'STOPS', 'EcoRI'], 'NheI-NRX1B_SS4IN_ExC-APTag-TEV-HIS-GST-EcoRI')
+tools.create_construct_from_deconstructed_sequences(['SecretionSignal', 'Linker1', 'NRX1B_SS4IP1_ExC', "Linker2", 'APTag', 'Linker3', 'TEV', 'GST', 'HIS', 'STOPS'], 'NRX1B_SS4IP1_ExC-APTag-TEV-HIS-GST')
+tools.create_construct_from_deconstructed_sequences(['NheI', 'SecretionSignal', 'Linker1', 'NRX1B_SS4IP1_ExC', "Linker2", 'APTag', 'Linker3', 'TEV', 'HIS', 'STOPS', 'EcoRI'], 'NheI-NRX1B_SS4IP1_ExC-APTag-TEV-HIS-GST-EcoRI')
 
 # pd1PeptideSequence = tools.createSeqObjectFromString('MWVRQVPWSFTWAVLQLSWQSGWLLEVPNGPWRSLTFYPAWLTVSEGANATFTCSLSNWSEDLMLNWNRLSPSNQTEKQAAFCNGLSQPVQDARFQIIQLPNRHDFHMNILDTRRNDSGIYLCGAISLHPKAKIEESPGAELVVTERILETSTRYPSPSPKPEGRFQGMVIGIMSALVGIPVLLLLAWALAVFCSTSMSEARGAGSKDDTLKEEPSAAPVPSVAYEELDFQGREKTPELPTACVHTEYATIVFTEGLGASAMGRRGSADGLQGPRPPRHEDGHCSWPL')
 
