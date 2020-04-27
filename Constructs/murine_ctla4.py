@@ -1,7 +1,7 @@
 from SequenceTools import SequenceTools
 
 tools = SequenceTools()
-tools.importSeqeuenceByNCBIIdentifier("NM_009843.4")
-tools.deconstructImportedCDNASequence(tools.allSequences["NM_009843.4"], "NM_009843.4", minPeptideLength=223)
+tools.import_sequence_by_ncbi_identifier("NM_009843.4")
+tools.deconstruct_imported_cdna_sequence(tools.all_sequences["NM_009843.4"], "NM_009843.4", minPeptideLength=223)
 
 pass
