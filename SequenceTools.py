@@ -16,7 +16,7 @@ class SequenceTools:
 
     all_constructs = None
 
-    def return_first_coding_sequence(self, seq, maxPeptideLength=None, minPeptideLength=None):
+    def return_first_coding_sequence(self, seq, maxPeptideLength=None, min_peptide_length=None):
         start = None
         peptideDNASeq = None
         for i in range(0, len(seq)):
@@ -25,7 +25,7 @@ class SequenceTools:
             seqPeptide = seq[i:].translate(CodonTable.unambiguous_dna_by_id[1], to_stop=True)
             if str(peptide) == "M":
                 seqPeptideLen = len(seqPeptide)
-                if minPeptideLength is not None and len(seqPeptide) >= minPeptideLength:
+                if min_peptide_length is not None and len(seqPeptide) >= min_peptide_length:
                     start = i
                     break
         startToEnd = seq[start:]
@@ -50,6 +50,36 @@ class SequenceTools:
                 elif i == (len(startToEnd)//3-1):
                     peptideDNASeq = startToEnd[:(i+1)*3]
         return peptideDNASeq
+
+    def deconstruct_imported_orf_sequence(self, sequence, sequence_identifier, sequence_to_search_for, min_peptide_length=None):
+        seq = Seq(sequence)
+        for i in range(0, len(seq)):
+            potential_protein = seq[i:].translate(CodonTable.unambiguous_dna_by_id[1])
+            find_result = str(potential_protein.lower()).find(sequence_to_search_for.lower())
+            if find_result > 0:
+                coding_seq = self.return_first_coding_sequence(seq[find_result*3:], min_peptide_length=min_peptide_length)
+                protein = coding_seq.translate(CodonTable.unambiguous_dna_by_id[1])
+                deconstructedDict = {}
+                deconstructedDict['coding'] = True
+                deconstructedDict['sequenceIdentifier'] = sequence_identifier
+                deconstructedDict['dnaSequence'] = coding_seq
+                deconstructedDict['peptideSequence'] = Seq('')
+                deconstructedDict['deconstructedList'] = []
+                for i in range(0, len(coding_seq)//3):
+                    codonDict = {}
+                    codonDict['peptide'] = protein[i]
+                    deconstructedDict['peptideSequence'] += Seq(protein[i])
+                    codonDict['dna'] = coding_seq[i*3:(i+1)*3]
+                    codonDict['peptidePosition'] = i+1
+                    codonDict['dnaStartPosition'] = i*3+1
+                    codonDict['dnaEndPosition'] = (i+1)*3
+                    codonDict['coding'] = True
+                    codonDict['sequenceName'] = sequence_identifier
+                    deconstructedDict['deconstructedList'].append(codonDict)
+                self.all_deconstructed_sequences[sequence_identifier] = deconstructedDict
+                self.all_constructs[sequence_identifier] = deconstructedDict
+                break
+
 
     def deconstruct_imported_cdna_sequence(self, sequence, sequence_identifier, maxPeptideLength=None, minPeptideLength=None):
         seq = Seq(sequence)
