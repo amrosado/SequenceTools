@@ -140,7 +140,7 @@ class SequenceTools:
                 codeDict['sequenceName'] = sequence_identifier
                 deconstructedDict['deconstructedList'].append(codeDict)
 
-
+        self.all_constructs[sequence_identifier] = deconstructedDict
         self.all_deconstructed_sequences[sequence_identifier] = deconstructedDict
 
     def make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(self, deconstructedSeq, constructName, positionToMutate, beforeAminoAcid, afterAminoAcid):
