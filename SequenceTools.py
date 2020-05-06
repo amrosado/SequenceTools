@@ -154,7 +154,7 @@ class SequenceTools:
             if item['peptidePosition'] == positionToMutate:
                 if item['peptide'] == beforeAminoAcid:
                     item['peptide'] = Seq(afterAminoAcid)
-                    item['dna'] = self.back_translate_dna_codon_minimal_nucelotide_changes(item['dna'], 'D')
+                    item['dna'] = self.back_translate_dna_codon_minimal_nucelotide_changes(item['dna'], afterAminoAcid).lower()
             newDeconstructedList.append(item)
             i = i+1
         newDeconstructedSeq = {}
@@ -228,14 +228,14 @@ class SequenceTools:
         seq = Seq('')
         for item in deconstructedList:
             seq += item['dna']
-        return seq
+        return seq.lower()
 
     def return_peptide_sequence_from_deconstructed_list(self, deconstructedList):
         seq = Seq('')
         for item in deconstructedList:
             if item['coding']:
                 seq += item['peptide']
-        return seq
+        return seq.lower()
 
     def insert_sequence_into_peptide_position(self, deconstructed_list_name, insert_deconstructed_list_name, new_list_name, insert_start_position):
         list_to_insert_into = copy.deepcopy(self.all_deconstructed_sequences[deconstructed_list_name])

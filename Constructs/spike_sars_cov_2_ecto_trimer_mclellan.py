@@ -147,16 +147,19 @@ tools.deconstruct_dna_sequence(t4_fibritin_trimerization_motif, 'T4_fibritin_tri
 tools.deconstruct_dna_sequence(linker_2_mclellan, 'Linker_2', True)
 tools.deconstruct_dna_sequence(hrv3c_protease_clevage_site, 'hrv3c_protease_cleavage', True)
 tools.deconstruct_dna_sequence(linker_4_mclellan, 'Linker_4', True)
+tools.deconstruct_dna_sequence(linker_3_mclellan, 'Linker_3', True)
 tools.deconstruct_dna_sequence(eight_x_his_tag, 'his_8', True)
 tools.deconstruct_dna_sequence(stop_3, 'stops', True)
 
 tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_sars_cov_2_trimer_bap_hrv3c_his8')
 tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_sars_cov_2_trimer_bap_hrv3c_his8_XbaI')
 
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S1_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s1_sars_cov_2_trimer_bap_hrv3c_his8')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S1_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s1_sars_cov_2_trimer_bap_hrv3c_his8_XbaI')
+tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S1_ecto_domain_mclellan', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s1_sars_cov_2_bap_hrv3c_his8')
+tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S1_ecto_domain_mclellan', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s1_sars_cov_2_trimer_bap_hrv3c_his8_XbaI')
 
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s2_sars_cov_2_trimer_bap_hrv3c_his8')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s2_sars_cov_2_trimer_bap_hrv3c_his8_XbaI')
+tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_ecto_domain_mclellan', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s2_sars_cov_2_bap_hrv3c_his8')
+tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_ecto_domain_mclellan', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s2_sars_cov_2_trimer_bap_hrv3c_his8_XbaI')
+
+compare_1 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['SarsCov2EctoMclellan'], tools.all_deconstructed_sequences['Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS']['peptideSequence'])
 
 pass

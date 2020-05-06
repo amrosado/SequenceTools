@@ -1,10 +1,13 @@
 from SequenceTools import SequenceTools
 
 tools = SequenceTools(email="arosado@gatech.edu")
-tools.import_sequence_by_ncbi_identifier("NC_000021.9")
-tools.deconstruct_imported_orf_sequence(tools.all_sequences["NC_000021.9"], "NC_000021.9", 'MALNSGSPPA',  min_peptide_length=492)
+tools.import_sequence_by_ncbi_identifier("NM_001135099.1")
+tools.deconstruct_imported_orf_sequence(tools.all_sequences["NM_001135099.1"], "NM_001135099.1", 'MALNSGSPPA',  min_peptide_length=492)
 
-tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_000021.9"], 106, 492, "TMPRSS2_ECD")
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NM_001135099.1"], 106, 492, "TMPRSS2_ECD")
+
+gstSeq = tools.create_seq_object_from_string("ATGTCCCCTATACTAGGTTATTGGAAAATTAAGGGCCTTGTGCAACCCACTCGACTTCTTTTGGAATATCTTGAAGAAAAATATGAAGAGCATTTGTATGAGCGCGATGAAGGTGATAAATGGCGAAACAAAAAGTTTGAATTGGGTTTGGAGTTTCCCAATCTTCCTTATTATATTGATGGTGATGTTAAATTAACACAGTCTATGGCCATCATACGTTATATAGCTGACAAGCACAACATGTTGGGTGGTTGTCCAAAAGAGCGTGCAGAGATTTCAATGCTTGAAGGAGCGGTTTTGGATATTAGATACGGTGTTTCGAGAATTGCATATAGTAAAGACTTTGAAACTCTCAAAGTTGATTTTCTTAGCAAGCTACCTGAAATGCTGAAAATGTTCGAAGATCGTTTATGTCATAAAACATATTTAAATGGTGATCATGTAACCCATCCTGACTTCATGTTGTATGACGCTCTTGATGTTGTTTTATACATGGACCCAATGTGCCTGGATGCGTTCCCAAAATTAGTTTGTTTTAAAAAACGTATTGAAGCTATCCCACAAATTGATAAGTACTTGAAATCCAGCAAGTATATAGCATGGCCTTTGCAGGGCTGGCAAGCCACGTTTGGTGGTGGCGACCATCCTCCAAAA")
+tools.deconstruct_dna_sequence(gstSeq, "GST", True)
 
 notISeq = tools.create_seq_object_from_string("GCGGCCGC")
 tools.deconstruct_dna_sequence(notISeq, "NotI", False)
@@ -70,7 +73,48 @@ stop_3 = tools.create_seq_object_from_string(
     '''
 )
 
+linker_3_mclellan = tools.create_seq_object_from_string(
+    '''
+    GGC
+    '''
+)
+
+tools.deconstruct_dna_sequence(linker_3_mclellan, 'Linker_3', True)
+
 tools.deconstruct_dna_sequence(stop_3, 'stops', True)
 
 tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'BAP_TMPRSS2ECD_HRV3CProtease_His8x')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'BAP_TMPRSS2ECD_HRV3CProtease_His8x')
+tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage', "Linker_3", "GST", 'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_BAP_TMPRSS2ECD_HRV3CProtease_GST_His8x_XbaI')
+
+check_sequence = tools.create_seq_object_from_string(
+    """
+    MALNSGSPPAIGPYYENHGYQPENPYPAQPTVVPTVYEVHPAQYYPSPVPQYAPRVLTQA
+SNPVVCTQPKSPSGTVCTSKTKKALCITLTLGTFLVGAALAAGLLWKFMGSKCSNSGIEC
+DSSGTCINPSNWCDGVSHCPGGEDENRCVRLYGPNFILQVYSSQRKSWHPVCQDDWNENY
+GRAACRDMGYKNNFYSSQGIVDDSGSTSFMKLNTSAGNVDIYKKLYHSDACSSKAVVSLR
+CIACGVNLNSSRQSRIVGGESALPGAWPWQVSLHVQNVHVCGGSIITPEWIVTAAHCVEK
+PLNNPWHWTAFAGILRQSFMFYGAGYQVEKVISHPNYDSKTKNNDIALMKLQKPLTFNDL
+VKPVCLPNPGMMLQPEQLCWISGWGATEEKGKTSEVLNAAKVLLIETQRCNSRYVYDNLI
+TPAMICAGFLQGNVDSCQGDSGGPLVTSKNNIWWLIGDTSWGSGCAKAYRPGVYGNVMVF
+TDWIYRQMRADG
+    """
+)
+
+check_sequence_2_ecd = tools.create_seq_object_from_string(
+    """
+    WKFMGSKCSNSGIECDSSGTCINPSNWCDGVSHCPGGEDENRCVRLYGPNFILQVYSSQR
+KSWHPVCQDDWNENYGRAACRDMGYKNNFYSSQGIVDDSGSTSFMKLNTSAGNVDIYKKL
+YHSDACSSKAVVSLRCIACGVNLNSSRQSRIVGGESALPGAWPWQVSLHVQNVHVCGGSI
+ITPEWIVTAAHCVEKPLNNPWHWTAFAGILRQSFMFYGAGYQVEKVISHPNYDSKTKNND
+IALMKLQKPLTFNDLVKPVCLPNPGMMLQPEQLCWISGWGATEEKGKTSEVLNAAKVLLI
+ETQRCNSRYVYDNLITPAMICAGFLQGNVDSCQGDSGGPLVTSKNNIWWLIGDTSWGSGC
+AKAYRPGVYGNVMVFTDWIYRQMRADG
+    """
+)
+
+
+
+test_result = tools.compare_peptide_construct_to_sequence(tools.all_constructs['NM_001135099.1'], check_sequence)
+test_result_2 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['TMPRSS2_ECD'], check_sequence_2_ecd)
+
+pass
