@@ -164,6 +164,7 @@ class SequenceTools:
         newDeconstructedSeq['deconstructedList'] = newDeconstructedList
         newDeconstructedSeq['coding'] = True
         newDeconstructedSeq['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(newDeconstructedSeq['deconstructedList'])
+
         self.all_deconstructed_sequences[constructName] = newDeconstructedSeq
         self.all_constructs[constructName] = newDeconstructedSeq
 
