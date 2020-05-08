@@ -92,6 +92,14 @@ linker_1_mclellan = tools.create_seq_object_from_string(
     '''
 )
 
+flag_tag = tools.create_seq_object_from_string(
+    '''
+    GATTACAAGGATGACGACGATAAG 
+    '''
+)
+
+tools.deconstruct_dna_sequence(flag_tag, 'FLAG', True)
+
 t4_fibritin_trimerization_motif = tools.create_seq_object_from_string(
     '''
     TACATCCCCGAGGCCCCCAGAGATGGCCAGGCCTACGTGCGGAAGGACGGCGAGTGGGTACTGCTGAGCACATTCCTGGGC
@@ -162,6 +170,12 @@ tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mo
 
 tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_ecto_domain_mclellan', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s2_sars_cov_2_bap_hrv3c_his8')
 tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_ecto_domain_mclellan', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s2_sars_cov_2_trimer_bap_hrv3c_his8_XbaI')
+
+tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S12S2prime', "Linker_1", 'FLAG', 'Linker_2', 'APTag', 'Linker_3', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s1_to_s2prime_sars_cov_2_flag_bap_hrv3c_his8')
+tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S12S2prime', "Linker_1", 'FLAG', 'Linker_2', 'APTag', 'Linker_3', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s1_to_s2prime_sars_cov_2_flag_bap_hrv3c_his8_XbaI')
+
+tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2', "Linker_1", 'FLAG', 'Linker_2', 'APTag', 'Linker_3',  'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s2_comp_sars_cov_2_flag_bap_hrv3c_his8')
+tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2', "Linker_1", 'FLAG', 'Linker_2', 'APTag', 'Linker_3',  'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s2_comp_sars_cov_2_flag_bap_hrv3c_his8_XbaI')
 
 compare_1 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['SarsCov2EctoMclellan'], tools.all_deconstructed_sequences['Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS']['peptideSequence'])
 
