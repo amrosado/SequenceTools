@@ -14,7 +14,10 @@ tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutat
 
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS"], 13, 1273, "Spike_ecto_domain_mclellan")
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS"], 13, 685, "Spike_S1_ecto_domain_mclellan")
-tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS"], 816, 1273, "Spike_S2_ecto_domain_mclellan")
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS"], 816, 1273, "Spike_S2prime_ecto_domain_mclellan")
+
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 13, 816, "Spike_S12S2prime")
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 686, 1273, "Spike_S2")
 
 notISeq = tools.create_seq_object_from_string("GCGGCCGC")
 tools.deconstruct_dna_sequence(notISeq, "NotI", False)
