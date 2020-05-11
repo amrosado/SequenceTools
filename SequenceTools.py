@@ -146,17 +146,22 @@ class SequenceTools:
     def make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(self, deconstructedSeq, constructName, positionToMutate, beforeAminoAcid, afterAminoAcid):
         newDeconstructedList = []
         i = 0
+
         for item in deconstructedSeq['deconstructedList']:
-            item['peptidePosition'] = i+1
-            item['dnaStartPosition'] = i*3+1
-            item['dnaEndPosition'] = (i+1)*3
-            item['sequenceName'] = constructName
-            if item['peptidePosition'] == positionToMutate:
+            item_copy = item.copy()
+
+            item_copy['peptidePosition'] = i+1
+            item_copy['dnaStartPosition'] = i*3+1
+            item_copy['dnaEndPosition'] = (i+1)*3
+            item_copy['sequenceName'] = constructName
+            if item_copy['peptidePosition'] == positionToMutate:
                 if item['peptide'] == beforeAminoAcid:
-                    item['peptide'] = Seq(afterAminoAcid)
-                    item['dna'] = self.back_translate_dna_codon_minimal_nucelotide_changes(item['dna'], afterAminoAcid).lower()
-            newDeconstructedList.append(item)
+                    item_copy['peptide'] = Seq(afterAminoAcid)
+                    item_copy['dna'] = self.back_translate_dna_codon_minimal_nucelotide_changes(item_copy['dna'], afterAminoAcid).lower()
+
+            newDeconstructedList.append(item_copy)
             i = i+1
+
         newDeconstructedSeq = {}
         newDeconstructedSeq['sequenceIdentifier'] = constructName
         seq = self.return_dna_sequence_from_deconstructed_list(newDeconstructedList)
@@ -172,18 +177,20 @@ class SequenceTools:
         deconstructedRange = []
         i = 0
 
-        standard_table = CodonTable.unambiguous_dna_by_id[1]
-
         for item in deconstructedSeq['deconstructedList']:
             if item['peptidePosition'] >= start and item['peptidePosition'] <= end:
-                item['peptidePosition'] = i+1
-                item['dnaStartPosition'] = i*3+1
-                item['dnaEndPosition'] = (i+1)*3
-                item['sequenceName'] = name
+                item_copy = item.copy()
 
-                deconstructedRange.append(item)
+                item_copy['peptidePosition'] = i+1 - start
+                item_copy['dnaStartPosition'] = (i+1)*3 - start*3
+                item_copy['dnaEndPosition'] = (i+2)*3 - start*3
+                item_copy['sequenceName'] = name
+
+                deconstructedRange.append(item_copy)
 
             i+=1
+
+
 
         newDeconstructedSeq = {}
         newDeconstructedSeq['sequenceIdentifier'] = name
@@ -214,9 +221,11 @@ class SequenceTools:
         possibleCodons = []
         codonScores = {}
         bestCodonScore = 0
+
         for forwardCodon in standardTable.forward_table:
             if standardTable.forward_table[forwardCodon] == desired_amino_acid:
                 possibleCodons.append(forwardCodon)
+
         for possibleCodon in possibleCodons:
             zipped = zip(before_dna_codon.upper(), possibleCodon)
             score = 0
@@ -318,17 +327,20 @@ class SequenceTools:
             constructDict['deconstructedComponents'].append(deconstuctedSeq)
             if self.all_deconstructed_sequences[name]['coding']:
                 for item in deconstuctedSeq['deconstructedList']:
-                    item['peptidePosition'] = i/3+1
-                    item['dnaStartPosition'] = i+1
-                    item['dnaEndPosition'] = i+3
+                    item_copy = item.copy()
+                    item_copy['peptidePosition'] = i/3+1
+                    item_copy['dnaStartPosition'] = i+1
+                    item_copy['dnaEndPosition'] = i+3
                     i+=3
-                    constructDict['deconstructedList'].append(item)
+                    constructDict['deconstructedList'].append(item_copy)
             else:
                 for item in deconstuctedSeq['deconstructedList']:
-                    item['dnaStartPosition'] = i
-                    item['dnaEndPosition'] = i
+                    item_copy = item.copy()
+                    item_copy['dnaStartPosition'] = i
+                    item_copy['dnaEndPosition'] = i
                     i+=1
-                    constructDict['deconstructedList'].append(item)
+                    constructDict['deconstructedList'].append(item_copy)
+
         constructDict['dnaSequence']  = self.return_dna_sequence_from_deconstructed_list(constructDict['deconstructedList'])
         constructDict['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(constructDict['deconstructedList'])
         self.all_constructs[constructName] = constructDict
