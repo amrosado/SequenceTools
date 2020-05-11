@@ -171,21 +171,28 @@ class SequenceTools:
     def make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(self, deconstructedSeq, start, end, name):
         deconstructedRange = []
         i = 0
+
+        standard_table = CodonTable.unambiguous_dna_by_id[1]
+
         for item in deconstructedSeq['deconstructedList']:
             if item['peptidePosition'] >= start and item['peptidePosition'] <= end:
                 item['peptidePosition'] = i+1
                 item['dnaStartPosition'] = i*3+1
                 item['dnaEndPosition'] = (i+1)*3
                 item['sequenceName'] = name
-                i+=1
+
                 deconstructedRange.append(item)
+
+            i+=1
+
         newDeconstructedSeq = {}
         newDeconstructedSeq['sequenceIdentifier'] = name
         seq = self.return_dna_sequence_from_deconstructed_list(deconstructedRange)
-        newDeconstructedSeq['dnaSequence'] = str(seq)
+        newDeconstructedSeq['dnaSequence'] = str(seq).lower()
         newDeconstructedSeq['deconstructedList'] = deconstructedRange
         newDeconstructedSeq['coding'] = True
         newDeconstructedSeq['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(newDeconstructedSeq['deconstructedList'])
+
         self.all_deconstructed_sequences[name] = newDeconstructedSeq
         self.all_constructs[name] = newDeconstructedSeq
 
