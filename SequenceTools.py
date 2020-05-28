@@ -214,7 +214,7 @@ class SequenceTools:
     def back_translate_amino_acid_to_codon(self, desired_amino_acid):
         standard_table = CodonTable.unambiguous_dna_by_id[1]
 
-        return standard_table.back_table[desired_amino_acid]
+        return standard_table.back_table[desired_amino_acid.upper()]
 
     def back_translate_dna_codon_minimal_nucelotide_changes(self, before_dna_codon, desired_amino_acid):
         standardTable = CodonTable.unambiguous_dna_by_id[1]
