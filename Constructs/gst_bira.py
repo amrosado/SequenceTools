@@ -89,5 +89,6 @@ construct_3.insert(0, "SacI")
 tools.create_construct_from_deconstructed_sequences(constuct2, 'SacI_T7leader_GST_thrombin_BiotinLigaseBirA_HindIII')
 
 tools.create_construct_from_deconstructed_sequences(construct_3, "SacI_GST_BirA_HindIII")
+tools.create_construct_from_deconstructed_sequences(construct_list_without_re_2, "GST_BirA")
 
 pass
