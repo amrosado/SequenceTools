@@ -4,6 +4,7 @@ from Bio.Alphabet import generic_dna, IUPAC
 from Bio.Data import CodonTable
 
 import copy
+import random
 
 class SequenceTools:
     current_sequence = None
@@ -210,6 +211,27 @@ class SequenceTools:
             dna_seq += self.back_translate_amino_acid_to_codon(i)
 
         return dna_seq
+
+    def back_translate_amino_acid_sequence_random_codon(self, desired_amino_acid_seq):
+        dna_seq = Seq('')
+
+        for i in desired_amino_acid_seq:
+            dna_seq += self.back_translate_amino_acid_to_random_codon(i)
+
+        return dna_seq
+
+    def back_translate_amino_acid_to_random_codon(self, desired_amino_acid):
+        standard_table = CodonTable.unambiguous_dna_by_id[1]
+
+        potential_codon_list = []
+
+        for codon in standard_table.forward_table:
+            if standard_table.forward_table[codon] == desired_amino_acid.upper():
+                potential_codon_list.append(codon)
+
+        random_int = random.randint(0, len(potential_codon_list) - 1)
+
+        return potential_codon_list[random_int]
 
     def back_translate_amino_acid_to_codon(self, desired_amino_acid):
         standard_table = CodonTable.unambiguous_dna_by_id[1]

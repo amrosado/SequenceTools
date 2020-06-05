@@ -40,7 +40,7 @@ ha3xpeptide = tools.create_seq_object_from_string(
     """
 )
 
-ha3x_dna_seq = tools.back_translate_amino_acid_sequence(ha3xpeptide)
+ha3x_dna_seq = tools.back_translate_amino_acid_sequence_random_codon(ha3xpeptide)
 
 tools.deconstruct_dna_sequence(ha3x_dna_seq, "Ha3x", True)
 
@@ -116,8 +116,8 @@ construct_list_with_re = construct_list_without_re.copy()
 construct_list_with_re.append('XbaI')
 construct_list_with_re.insert(0, 'NotI')
 
-tools.create_construct_from_deconstructed_sequences(construct_list_without_re, 'ACE2_3xHa_BAP_HRV3C_His8x')
-tools.create_construct_from_deconstructed_sequences(construct_list_with_re, 'NotI_ACE2_3xHa_BAP_HRV3C_His8x_XbaI')
+tools.create_construct_from_deconstructed_sequences(construct_list_without_re, 'ACE2_Ha3x_BAP_HRV3C_His8x')
+tools.create_construct_from_deconstructed_sequences(construct_list_with_re, 'NotI_ACE2_Ha3x_BAP_HRV3C_His8x_XbaI')
 
 ace2_ecd_uniprot = tools.create_seq_object_from_string(
     '''
@@ -140,5 +140,51 @@ PVS
 compare_3xha = tools.compare_peptide_construct_to_sequence(tools.all_constructs['Ha3x'], ha3xpeptide)
 
 compare_ace2_ecd = tools.compare_peptide_construct_to_sequence(tools.all_constructs['ACE2_ECD'], ace2_ecd_uniprot)
+
+working_seq = tools.create_seq_object_from_string(
+    """
+    atggagacagacacactcctgctatgggtactgctgctctgggttccaggttccactggtg
+    accagtccaccattgaggaacaggccaagacatttttggacaagtttaaccacgaagccga
+    agacctgttctatcaaagttcacttgcttcttggaattataacaccaatattactgaagag
+    aatgtccaaaacatgaataatgctggggacaaatggtctgcctttttaaaggaacagtcca
+    cacttgcccaaatgtatccactacaagaaattcagaatctcacagtcaagcttcagctgca
+    ggctcttcagcaaaatgggtcttcagtgctctcagaagacaagagcaaacggttgaacaca
+    attctaaatacaatgagcaccatctacagtactggaaaagtttgtaacccagataatccac
+    aagaatgcttattacttgaaccaggtttgaatgaaataatggcaaacagtttagactacaa
+    tgagaggctctgggcttgggaaagctggagatctgaggtcggcaagcagctgaggccatta
+    tatgaagagtatgtggtcttgaaaaatgagatggcaagagcaaatcattatgaggactatg
+    gggattattggagaggagactatgaagtaaatggggtagatggctatgactacagccgcgg
+    ccagttgattgaagatgtggaacatacctttgaagagattaaaccattatatgaacatctt
+    catgcctatgtgagggcaaagttgatgaatgcctatccttcctatatcagtccaattggat
+    gcctccctgctcatttgcttggtgatatgtggggtagattttggacaaatctgtactcttt
+    gacagttccctttggacagaaaccaaacatagatgttactgatgcaatggtggaccaggcc
+    tgggatgcacagagaatattcaaggaggccgagaagttctttgtatctgttggtcttccta
+    atatgactcaaggattctgggaaaattccatgctaacggacccaggaaatgttcagaaagc
+    agtctgccatcccacagcttgggacctggggaagggcgacttcaggatccttatgtgcaca
+    aaggtgacaatggacgacttcctgacagctcatcatgagatggggcatatccagtatgata
+    tggcatatgctgcacaaccttttctgctaagaaatggagctaatgaaggattccatgaagc
+    tgttggggaaatcatgtcactttctgcagccacacctaagcatttaaaatccattggtctt
+    ctgtcacccgattttcaagaagacaatgaaacagaaataaacttcctgctcaaacaagcac
+    tcacgattgttgggactctgccatttacttacatgttagagaagtggaggtggatggtctt
+    taaaggggaaattcccaaagaccagtggatgaaaaagtggtgggagatgaagcgagagata
+    gttggggtggtggaacctgtgccccatgatgaaacatactgtgaccccgcatctctgttcc
+    atgtttctaatgattactcattcattcgatattacacaaggaccctttaccaattccagtt
+    tcaagaagcactttgtcaagcagctaaacatgaaggccctctgcacaaatgtgacatctca
+    aactctacagaagctggacagaaactgttcaatatgctgaggcttggaaaatcagaaccct
+    ggaccctagcattggaaaatgttgtaggagcaaagaacatgaatgtaaggccactgctcaa
+    ctactttgagcccttatttacctggctgaaagaccagaacaagaattcttttgtgggatgg
+    agtaccgactggagtccatatgcagaccaaagcatcaaagtgaggataagcctaaaatcag
+    ctcttggagataaagcatatgaatggaacgacaatgaaatgtacctgttccgatcatctgt
+    tgcatatgctatgaggcagtactttttaaaagtaaaaaatcagatgattctttttggggag
+    gaggatgtgcgagtggctaatttgaaaccaagaatctcctttaatttctttgtcactgcac
+    ctaaaaatgtgtctgatatcattcctagaactgaagttgaaaaggccatcaggatgtcccg
+    gagccgtatcaatgatgctttccgtctgaatgacaacagcctagagtttctggggatacag
+    ccaacacttggacctcctaaccagccccctgtttccagatccggtctgaatgatattttcg
+    aagcgcagaaaattgaatggcatgaaggtaccggaatggaatacccatatgatgtaccaga
+    ctacgctgcagaatatccctacgatgttccagactatgccgcggagtacccctatgatgta
+    cccgattacgccgcaaaattggaaggatccggactggaggtgctgttccagggcccaagcg
+    cccatcaccaccatcaccaccatcattgataatga
+    """
+)
 
 pass
