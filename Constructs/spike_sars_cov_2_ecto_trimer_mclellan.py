@@ -12,14 +12,23 @@ tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutat
 tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(tools.all_deconstructed_sequences['Spike_proline_986_KP_987_VP_682_RG'], 'Spike_proline_986_KP_987_VP_682_RG_683_RS', 683, 'R', 'S')
 tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(tools.all_deconstructed_sequences['Spike_proline_986_KP_987_VP_682_RG_683_RS'], 'Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS', 685, 'R', 'S')
 
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 13, 1273, "Spike_ecd")
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 13, 1273, "Spike_ecd_S1")
+
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS"], 13, 1273, "Spike_ecto_domain_mclellan")
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS"], 13, 685, "Spike_S1_ecto_domain_mclellan")
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS"], 686, 1273, "Spike_S2_ecto_domain_mclellan")
 
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 13, 816, "Spike_S1_to_S2prime")
-tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 816, 1273, "Spike_S2_prime")
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 816, 1273, "Spike_ecd_S2prime")
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 686, 1273, "Spike_S2")
 
+
+kozak_seq_non_coding = tools.create_seq_object_from_string("gccAcc")
+tools.deconstruct_dna_sequence(kozak_seq_non_coding, "KozakNonCoding", False)
+
+kozak_seq_coding = tools.create_seq_object_from_string("ATGGGT")
+tools.deconstruct_dna_sequence(kozak_seq_non_coding, "KozakCoding", True)
 
 notISeq = tools.create_seq_object_from_string("GCGGCCGC")
 tools.deconstruct_dna_sequence(notISeq, "NotI", False)
@@ -29,6 +38,9 @@ tools.deconstruct_dna_sequence(xbaISeq, "XbaI", False)
 
 linker_0_seq = tools.create_seq_object_from_string("GGTACCGGA")
 tools.deconstruct_dna_sequence(linker_0_seq, "Linker_0", True)
+
+linker_5_seq = tools.create_seq_object_from_string("GGTAGTGGTGGTAGTGGT")
+tools.deconstruct_dna_sequence(linker_5_seq, "Linker_5", True)
 
 seqPeptideSeq = tools.create_seq_object_from_string("ATGGAGACAGACACACTCCTGCTATGGGTACTGCTGCTCTGGGTTCCAGGTTCCACTGGTGAC")
 tools.deconstruct_dna_sequence(seqPeptideSeq, "SecretionSignal_mouseIgKappa", True)
@@ -170,25 +182,20 @@ tools.deconstruct_dna_sequence(hrv3c_protease_clevage_site, 'hrv3c_protease_clea
 tools.deconstruct_dna_sequence(linker_4_mclellan, 'Linker_4', True)
 tools.deconstruct_dna_sequence(linker_3_mclellan, 'Linker_3', True)
 tools.deconstruct_dna_sequence(eight_x_his_tag, 'his_8', True)
+tools.deconstruct_dna_sequence(twin_strept_2_tag, "TST", True)
 tools.deconstruct_dna_sequence(stop_3, 'stops', True)
 
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_sars_cov_2_mclellan_trimer_myc3x_bap_hrv3c_his8')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_sars_cov_2_mclellan_trimer_myc3x_bap_hrv3c_his8_XbaI')
+spike_trimer = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecd', "Linker_1", 'T4_fibritin_trimerization_motif', 'Linker_5', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'Linker_4', 'TST', 'stops']
+spike_trimer_mclellan = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'Linker_5', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'Linker_4', 'TST', 'stops']
+spike_s1 = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecd_S1', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'Linker_4', 'TST', 'stops']
+spike_s2_prime = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecd_S2prime', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'Linker_4', 'TST', 'stops']
 
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S1_ecto_domain_mclellan', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s1_sars_cov_2_mclellan_myc3x_bap_hrv3c_his8')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S1_ecto_domain_mclellan', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s1_sars_cov_2_mclellan_myc3x_bap_hrv3c_his8_XbaI')
+spike_trimer_with_re = spike_trimer.copy()
+spike_trimer_mclellan_with_re = spike_trimer_mclellan.copy()
+spike_s1_with_re = spike_s1.copy()
+spike_s2_prime_with_re = spike_s2_prime.copy()
 
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_ecto_domain_mclellan', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s2_ecd_sars_cov_2_mclellan_myc3x_bap_hrv3c_his8')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_ecto_domain_mclellan', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s2_ecd_sars_cov_2_mclellan_myc3x_bap_hrv3c_his8_XbaI')
-
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S1_to_S2prime', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s1_to_s2prime_sars_cov_2_myc3x_bap_hrv3c_his8')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S1_to_S2prime', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s1_to_s2prime_sars_cov_2_myc3x_bap_hrv3c_his8_XbaI')
-
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2',  'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s2_comp_sars_cov_2_myc3x_bap_hrv3c_his8')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s2_comp_sars_cov_2_myc3x_bap_hrv3c_his8_XbaI')
-
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_prime', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2',  'hrv3c_protease_cleavage',  'Linker_4', 'his_8', 'stops'], 'spike_s2_prime_sars_cov_2_myc3x_bap_hrv3c_his8')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S2_prime', "Linker_1", 'MYC3x', 'Linker_1', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_spike_s2_prime_sars_cov_2_myc3x_bap_hrv3c_his8_XbaI')
+tools.create_construct_from_deconstructed_sequences(spike_trimer, 'SC2_Spike_ecd_trimer')
 
 compare_1 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['SarsCov2EctoMclellan'], tools.all_deconstructed_sequences['Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS']['peptideSequence'])
 
