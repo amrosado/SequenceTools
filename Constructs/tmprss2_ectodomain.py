@@ -87,14 +87,39 @@ linker_3_mclellan = tools.create_seq_object_from_string(
     '''
 )
 
+linker_4_mclellan = tools.create_seq_object_from_string(
+    '''
+    AGCGCC
+    '''
+)
+
 tools.deconstruct_dna_sequence(linker_3_mclellan, 'Linker_3', True)
+
+# Specific linker before TST tag
+tools.deconstruct_dna_sequence(linker_4_mclellan, 'Linker_4', True)
 
 tools.deconstruct_dna_sequence(stop_3, 'stops', True)
 
-tmprss2_ecd = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'Linker_4', 'TST', 'stops']
+kozak_seq_non_coding = tools.create_seq_object_from_string("gccAcc")
+tools.deconstruct_dna_sequence(kozak_seq_non_coding, "KozakNonCoding", False)
 
-tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_3', 'his_8', 'stops'], 'Flag_3x_BAP_TMPRSS2ECD_HRV3CProtease_His8x')
-tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage', "Linker_3", "GST", 'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_Flag3x_BAP_TMPRSS2ECD_HRV3CProtease_GST_His8x_XbaI')
+linker_5_seq = tools.create_seq_object_from_string("GGTAGTGGTGGTAGTGGT")
+tools.deconstruct_dna_sequence(linker_5_seq, "Linker_5", True)
+
+twin_strept_2_tag = tools.create_seq_object_from_string(
+    '''
+    TGGTCCCACCCCCAGTTCGAGAAGGGCGGCGGTAGTGGAGGGGGCGGATCTGGCGGCTCAGCTTGGAGCCACCCCCAGTTCGAAAAG
+    '''
+)
+
+tools.deconstruct_dna_sequence(twin_strept_2_tag, "TST", True)
+
+tmprss2_ecd = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_5", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'stops']
+
+tools.create_construct_from_deconstructed_sequences(tmprss2_ecd, "FLAG3x_BAP_TMPRSS2_ECD_HRV3C_His8x_TST")
+
+# tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_3', 'his_8', 'GST', 'Linker_4', 'TST', 'stops'], 'Flag_3x_BAP_TMPRSS2ECD_HRV3CProtease_His8x')
+# tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage', "Linker_3", "GST", 'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_Flag3x_BAP_TMPRSS2ECD_HRV3CProtease_GST_His8x_XbaI')
 
 check_sequence = tools.create_seq_object_from_string(
     """

@@ -24,6 +24,9 @@ linker_1_mclellan = tools.create_seq_object_from_string(
     '''
 )
 
+kozak_seq_non_coding = tools.create_seq_object_from_string("gccAcc")
+tools.deconstruct_dna_sequence(kozak_seq_non_coding, "KozakNonCoding", False)
+
 tools.deconstruct_dna_sequence(linker_1_mclellan, 'Linker_1', True)
 
 apTagSeq = tools.create_seq_object_from_string("GGTCTGAATGATATTTTCGAAGCGCAGAAAATTGAATGGCATGAA")
@@ -108,8 +111,11 @@ linker_3_mclellan = tools.create_seq_object_from_string(
 
 tools.deconstruct_dna_sequence(linker_3_mclellan, 'Linker_3', True)
 
+linker_5_seq = tools.create_seq_object_from_string("GGTAGTGGTGGTAGTGGT")
+tools.deconstruct_dna_sequence(linker_5_seq, "Linker_5", True)
 
-construct_list_without_re = ['SecretionSignal_mouseIgKappa', 'ACE2_ECD', 'Linker_2', 'APTag', 'Linker_0', 'Ha3x', "Linker_1", 'hrv3c_protease_cleavage', 'Linker_4', 'his_8', 'stops']
+
+construct_list_without_re = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'ACE2_ECD', 'Linker_1', 'Ha3x', 'Linker_5' ,'APTag', "Linker_2", 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'stops']
 
 construct_list_with_re = construct_list_without_re.copy()
 

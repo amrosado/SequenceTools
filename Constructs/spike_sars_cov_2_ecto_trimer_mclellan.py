@@ -7,13 +7,14 @@ tools.import_sequence_by_ncbi_identifier("NC_045512.2")
 tools.deconstruct_imported_orf_sequence(tools.all_sequences["NC_045512.2"], "NC_045512.2", 'MFVFLVLLPL',  min_peptide_length=1273)
 
 tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(tools.all_deconstructed_sequences["NC_045512.2"], 'Spike_proline_986_KP', 986, 'K', 'P')
+tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(tools.all_deconstructed_sequences["NC_045512.2"], 'Spike_D614G', 614, 'D', 'G')
 tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(tools.all_deconstructed_sequences['Spike_proline_986_KP'], 'Spike_proline_986_KP_987_VP', 987, 'V', 'P')
 tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(tools.all_deconstructed_sequences['Spike_proline_986_KP_987_VP'], 'Spike_proline_986_KP_987_VP_682_RG', 682, 'R', 'G')
 tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(tools.all_deconstructed_sequences['Spike_proline_986_KP_987_VP_682_RG'], 'Spike_proline_986_KP_987_VP_682_RG_683_RS', 683, 'R', 'S')
 tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(tools.all_deconstructed_sequences['Spike_proline_986_KP_987_VP_682_RG_683_RS'], 'Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS', 685, 'R', 'S')
 
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 13, 1273, "Spike_ecd")
-tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 13, 1273, "Spike_ecd_S1")
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["NC_045512.2"], 13, 685, "Spike_ecd_S1")
 
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS"], 13, 1273, "Spike_ecto_domain_mclellan")
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS"], 13, 685, "Spike_S1_ecto_domain_mclellan")
@@ -189,6 +190,7 @@ spike_trimer = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'S
 spike_trimer_mclellan = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecto_domain_mclellan', "Linker_1", 'T4_fibritin_trimerization_motif', 'Linker_5', 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'Linker_4', 'TST', 'stops']
 spike_s1 = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecd_S1', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'Linker_4', 'TST', 'stops']
 spike_s2_prime = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_ecd_S2prime', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'Linker_4', 'TST', 'stops']
+spike_s1_to_S2prime = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'Linker_0', 'Spike_S1_to_S2prime', "Linker_1", 'APTag', 'Linker_2', 'hrv3c_protease_cleavage', 'Linker_3', 'his_8', 'Linker_4', 'TST', 'stops']
 
 spike_trimer_with_re = spike_trimer.copy()
 spike_trimer_mclellan_with_re = spike_trimer_mclellan.copy()
@@ -196,6 +198,10 @@ spike_s1_with_re = spike_s1.copy()
 spike_s2_prime_with_re = spike_s2_prime.copy()
 
 tools.create_construct_from_deconstructed_sequences(spike_trimer, 'SC2_Spike_ecd_trimer')
+tools.create_construct_from_deconstructed_sequences(spike_trimer_mclellan, 'SC2_Spike_ecd_trimer_mclellan')
+tools.create_construct_from_deconstructed_sequences(spike_s1, 'SC2_Spike_S1')
+tools.create_construct_from_deconstructed_sequences(spike_s2_prime, 'SC2_Spike_S2prime')
+tools.create_construct_from_deconstructed_sequences(spike_s1_to_S2prime, 'SC2_Spike_S1ToS2prime')
 
 compare_1 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['SarsCov2EctoMclellan'], tools.all_deconstructed_sequences['Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS']['peptideSequence'])
 
@@ -251,9 +257,9 @@ peptide_seq_s_ecto_dfu_2p = tools.create_seq_object_from_string(
     '''
 )
 
-test = tools.compare_peptide_construct_to_sequence(tools.all_constructs['Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS'], peptide_seq_s_ecto_dfu_2p)
-test_s1 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['Spike_S1_ecto_domain_mclellan'], check_s1_protein_seq)
-test_s2 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['Spike_S2'], check_s2_peptide_seq)
-test_s2prime = tools.compare_peptide_construct_to_sequence(tools.all_constructs['Spike_S2_prime'], check_s2prime_peptide_seq)
+# test = tools.compare_peptide_construct_to_sequence(tools.all_constructs['Spike_proline_986_KP_987_VP_682_RG_683_RS_685_RS'], peptide_seq_s_ecto_dfu_2p)
+# test_s1 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['Spike_S1_ecto_domain_mclellan'], check_s1_protein_seq)
+# test_s2 = tools.compare_peptide_construct_to_sequence(tools.all_constructs['Spike_S2'], check_s2_peptide_seq)
+# test_s2prime = tools.compare_peptide_construct_to_sequence(tools.all_constructs['Spike_S2_prime'], check_s2prime_peptide_seq)
 
 pass
