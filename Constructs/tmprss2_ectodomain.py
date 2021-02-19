@@ -118,8 +118,8 @@ tmprss2_ecd = ['KozakNonCoding', 'SecretionSignal_mouseIgKappa', 'FLAG3x', 'Link
 
 tools.create_construct_from_deconstructed_sequences(tmprss2_ecd, "FLAG3x_BAP_TMPRSS2_ECD_HRV3C_His8x_TST")
 
-# tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_3', 'his_8', 'GST', 'Linker_4', 'TST', 'stops'], 'Flag_3x_BAP_TMPRSS2ECD_HRV3CProtease_His8x')
-# tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage', "Linker_3", "GST", 'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_Flag3x_BAP_TMPRSS2ECD_HRV3CProtease_GST_His8x_XbaI')
+tools.create_construct_from_deconstructed_sequences(['SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage',  'Linker_3', 'his_8', 'GST', 'Linker_4', 'TST', 'stops'], 'Flag_3x_BAP_TMPRSS2ECD_HRV3CProtease_His8x')
+tools.create_construct_from_deconstructed_sequences(['NotI', 'SecretionSignal_mouseIgKappa', 'FLAG3x', 'Linker_0', 'APTag', "Linker_1", 'TMPRSS2_ECD', 'Linker_2', 'hrv3c_protease_cleavage', "Linker_3", "GST", 'Linker_4', 'his_8', 'stops', 'XbaI'], 'NotI_Flag3x_BAP_TMPRSS2ECD_HRV3CProtease_GST_His8x_XbaI')
 
 check_sequence = tools.create_seq_object_from_string(
     """
