@@ -43,8 +43,9 @@ tools.deconstruct_dna_sequence(linker_0_seq, "Linker_0", True)
 linker_5_seq = tools.create_seq_object_from_string("GGTAGTGGTGGTAGTGGT")
 tools.deconstruct_dna_sequence(linker_5_seq, "Linker_5", True)
 
+# Secretion signal mouse Ig kappa chain
 seqPeptideSeq = tools.create_seq_object_from_string("ATGGAGACAGACACACTCCTGCTATGGGTACTGCTGCTCTGGGTTCCAGGTTCCACTGGTGAC")
-tools.deconstruct_dna_sequence(seqPeptideSeq, "SecretionSignal_mouseIgKappa", True)
+tools.deconstruct_dna_sequence(seqPeptideSeq, "SS_MIgK", True)
 
 sars_cov2_ecto_mclellan = tools.create_seq_object_from_string(
     '''

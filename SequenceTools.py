@@ -1,6 +1,5 @@
 from Bio import Entrez
 from Bio.Seq import Seq
-from Bio.Alphabet import generic_dna, IUPAC
 from Bio.Data import CodonTable
 
 import copy
@@ -17,40 +16,40 @@ class SequenceTools:
 
     all_constructs = None
 
-    def return_first_coding_sequence(self, seq, maxPeptideLength=None, min_peptide_length=None):
+    def return_first_coding_sequence(self, seq, max_peptide_length=None, min_peptide_length=None):
         start = None
-        peptideDNASeq = None
+        peptide_dna_seq = None
+
         for i in range(0, len(seq)):
-            subSeq = seq[i:i+3]
-            peptide = subSeq.translate(CodonTable.unambiguous_dna_by_id[1], to_stop=True)
-            seqPeptide = seq[i:].translate(CodonTable.unambiguous_dna_by_id[1], to_stop=True)
+            sub_seq = seq[i:i+3]
+            peptide = sub_seq.translate(table='Standard', to_stop=True)
+            seq_peptide = seq[i:].translate(table='Standard', to_stop=True)
             if str(peptide) == "M":
-                seqPeptideLen = len(seqPeptide)
-                if min_peptide_length is not None and len(seqPeptide) >= min_peptide_length:
+                if min_peptide_length is not None and len(seq_peptide) >= min_peptide_length:
                     start = i
                     break
-        startToEnd = seq[start:]
-        endPeptide = None
-        rang = range(len(startToEnd)//3)
-        for i in range(len(startToEnd)//3):
-            if maxPeptideLength is not None:
-                if i+1 <= maxPeptideLength:
-                    triplet = startToEnd[i*3:(i+1)*3]
+        start_to_end = seq[start:]
+        end_peptide = None
+        rang = range(len(start_to_end)//3)
+        for i in range(len(start_to_end)//3):
+            if max_peptide_length is not None:
+                if i+1 <= max_peptide_length:
+                    triplet = start_to_end[i*3:(i+1)*3]
                     translatedTriplet = triplet.translate(CodonTable.unambiguous_dna_by_id[1])
                     if translatedTriplet == '*':
-                        peptideDNASeq = startToEnd[:(i+1)*3]
+                        peptide_dna_seq = start_to_end[:(i+1)*3]
                 else:
-                    peptideDNASeq = startToEnd[:i*3]
+                    peptide_dna_seq = start_to_end[:i*3]
                     break
             else:
-                triplet = startToEnd[i*3:(i+1)*3]
+                triplet = start_to_end[i*3:(i+1)*3]
                 translatedTriplet = triplet.translate(CodonTable.unambiguous_dna_by_id[1])
                 if translatedTriplet == '*':
-                    peptideDNASeq = startToEnd[:(i+1)*3]
+                    peptide_dna_seq = start_to_end[:(i+1)*3]
                     break
-                elif i == (len(startToEnd)//3-1):
-                    peptideDNASeq = startToEnd[:(i+1)*3]
-        return peptideDNASeq
+                elif i == (len(start_to_end)//3-1):
+                    peptide_dna_seq = start_to_end[:(i+1)*3]
+        return peptide_dna_seq
 
     def deconstruct_imported_orf_sequence(self, sequence, sequence_identifier, sequence_to_search_for, min_peptide_length=None):
         seq = Seq(sequence)

@@ -1,9 +1,10 @@
 from SequenceTools import SequenceTools
 
 tools = SequenceTools(email="arosado@gatech.edu")
-tools.import_sequence_by_ncbi_identifier("AJ278965.1")
-tools.deconstruct_imported_cdna_sequence(tools.all_sequences["AJ278965.1"], "AJ278965.1", maxPeptideLength=306)
-tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_deconstructed_sequences["AJ278965.1"], 38, 246, "CD80_Extracellular")
+
+tools.import_sequence_by_ncbi_identifier("NP_787058.5")
+tools.deconstruct_imported_cdna_sequence(tools.all_sequences["NP_787058.5"], "NP_787058.5", minPeptideLength=309)
+tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_deconstructed_sequences["NP_787058.5"], 24, 247, "CD86_Extracellular")
 
 dnaSeq = tools.return_dna_sequence_from_deconstructed_list(tools.all_deconstructed_sequences["CD80_Extracellular"]['deconstructedList'])
 dnaSeq2 = tools.create_seq_object_from_string("GTTTCCGTGGAGACGCAAGCTTATTTCAATGGGACTGCATATCTGCCGTGCCCAT TTACAAAGGCTCAAAACATAAGCCTGAGTGAGCTGGTAGTATTTTGGCAGGACCAGCAAA AGTTGGTTCTGTACGAGCACTATTTGGGCACAGAGAAACTTGATAGTGTGAATGCCAAGT ACCTGGGCCGCACGAGCTTTGACAGGAACAACTGGACTCTACGACTTCACAATGTTCAGA TCAAGGACATGGGCTCGTATGATTGTTTTATACAAAAAAAGCCACCCACAGGATCAATTA TCCTCCAACAGACATTAACAGAACTGTCAGTGATCGCCAACTTCAGTGAACCTGAAATAA AACTGGCTCAGAATGTAACAGGAAATTCTGGCATAAATTTGACCTGCACGTCTAAGCAAG GTCACCCGAAACCTAAGAAGATGTATTTTCTGATAACTAATTCAACTAATGAGTATGGTG ATAACATGCAGATATCACAAGATAATGTCACAGAACTGTTCAGTATCTCCAACAGCCTCT CTCTTTCATTCCCGGATGGTGTGTGGCATATGACCGTTGTGTGTGTTCTGGAAACGGAGT CAATGAAGATTTCCTCCAAACCTCTCAATTTCACTCAAGAGTTTCCATCTCCTCAAACGT ATTGGAAG")
@@ -93,8 +94,8 @@ tools.deconstruct_dna_sequence(stopCodonsSeq, "STOPS", True)
 
 cd80ExtracellularPeptideSequence = tools.create_seq_object_from_string('VDEQLSKSVKDKVLLPCRYNSPHEDESEDRIYWQKHDKVVLSVIAGKLKVWPEYKNRTLYDNTTYSLIILGLVLSDRGTYSCVVQKKERGTYEVKHLALVKLSIKADFSTPNITESGNPSADTKRITCFASGGFPKPRFSWLENGRELPGINTTISQDPESELYTISSQLDFNTTRNHTIKCLIKYGDAHVSEDFTWEKPPEDPPDSKN')
 
-tools.create_construct_from_deconstructed_sequences(['KozakNonCoding', 'KozakCoding', 'SS_MIgK', 'Linker1', 'CD80_Extracellular', "Linker2", 'APTag', 'Linker3', 'TEV', 'TST', 'Linker4', '8xHis'], 'CD80Extracellular-APTag-TEV-TST-8xHis-IRES_EGFP')
-tools.create_construct_from_deconstructed_sequences(['XbaI' , 'KozakNonCoding', 'KozakCoding', 'SS_MIgK', 'Linker1', 'CD80_Extracellular', "Linker2", 'APTag', 'Linker3', 'TST', 'Linker4', '8xHis', 'XhoI'], 'XbaI-CD80Extracellular-APTag-TEV-TST-8xHis-IRES_EGFP-XhoI')
+tools.create_construct_from_deconstructed_sequences(['KozakNonCoding', 'KozakCoding', 'SS_MIgK', 'Linker1', 'CD86_Extracellular', "Linker2", 'APTag', 'Linker3', 'TEV', 'TST', 'Linker4', '8xHis'], 'CD86Extracellular-APTag-TEV-TST-8xHis-IRES_EGFP')
+tools.create_construct_from_deconstructed_sequences(['XbaI' , 'KozakNonCoding', 'KozakCoding', 'SS_MIgK', 'Linker1', 'CD86_Extracellular', "Linker2", 'APTag', 'Linker3', 'TST', 'Linker4', '8xHis', 'XhoI'], 'XbaI-CD86Extracellular-APTag-TEV-TST-8xHis-IRES_EGFP-XhoI')
 
 cd80PeptideSequence = tools.create_seq_object_from_string('MACNCQLMQDTPLLKFPCPRLILLFVLLIRLSQVSSDVDEQLSKSVKDKVLLPCRYNSPHEDESEDRIYWQKHDKVVLSVIAGKLKVWPEYKNRTLYDNTTYSLIILGLVLSDRGTYSCVVQKKERGTYEVKHLALVKLSIKADFSTPNITESGNPSADTKRITCFASGGFPKPRFSWLENGRELPGINTTISQDPESELYTISSQLDFNTTRNHTIKCLIKYGDAHVSEDFTWEKPPEDPPDSKNTLVLFGAGFGAVITVVVIVVIIKCFCKHRSCFRRNEASRETNNSLTFGPEEALAEQTVFL')
 genScriptSeq = tools.create_seq_object_from_string('''
