@@ -1,9 +1,9 @@
 from SequenceTools import SequenceTools
 from CommonSeqsTags import CommonSeqsTags
 
-tools = SequenceTools(email="arosado@gatech.edu")
-
 common_tags = CommonSeqsTags()
+
+tools = SequenceTools(email="arosado@gatech.edu")
 
 tools.import_sequence_by_ncbi_identifier("NM_005191")
 tools.deconstruct_imported_cdna_sequence(tools.all_sequences["NM_005191"], "NM_005191", min_peptide_length=288)
@@ -41,15 +41,18 @@ linker_5 = tools.create_seq_object_from_string(
     AGCGCC
     '''
 )
-tools.deconstruct_dna_sequence(linker_5, "Linker5", True)
 
-construct_list = ['KozakNonCoding', 'SSMIGGK', 'Linker1', 'hCD80_Extracellular', "Linker2", 'APTag', 'Linker3', 'TEV', '8xHis', 'TST', 'Stops']
+construct_list = ['KozakNonCoding', 'SSMIGGK', 'Linker1', 'mCD80_Extracellular',  "hIgG1_Fc", "Linker2", 'APTag', 'Linker3', 'TEV', '8xHis', 'TST', 'Stops']
+
 cuts_construct_list = ['XbaI'] + construct_list + ['XhoI']
 
-tools.create_construct_from_deconstructed_sequences(construct_list, 'CD80Extracellular-APTag-TEV-8xHis-TST')
-tools.create_construct_from_deconstructed_sequences(cuts_construct_list, 'XbaI-CD80Extracellular-APTag-TEV-8xHis-TST-XhoI')
+tools.create_construct_from_deconstructed_sequences(construct_list, 'hCD80Extracellular-hIgG1Fc-APTag-TEV-8xHis-TST')
+tools.create_construct_from_deconstructed_sequences(cuts_construct_list, 'XbaI-hCD80Extracellular-hIgG1Fc-APTag-TEV-8xHis-TST-XhoI')
 
 hcd80ec_seq = tools.create_seq_object_from_string("VIHVTKEVKEVATLSCGHNVSVEELAQTRIYWQKEKKMVLTMMSGDMNIWPEYKNRTIFDITNNLSIVILALRPSDEGTYECVVLKYEKDAFKREHLAEVTLSVKADFPTPSISDFEIPTSNIRRIICSTSGGFPEPHLSWLENGEELNAINTTVSQDPETELYAVSSKLDFNMTTNHSFMCLIKYGHLRVNQTFNWNTTKQEHFPDN")
 compare_result = tools.compare_peptide_construct_to_sequence(tools.all_constructs["hCD80_Extracellular"], hcd80ec_seq)
+
+print("Print constructed DNA sequence for XbaI-hCD80Extracellular-hIgG1Fc-APTag-TEV-8xHis-TST-XhoI\n")
+print("{}".format(tools.all_constructs["XbaI-hCD80Extracellular-hIgG1Fc-APTag-TEV-8xHis-TST-XhoI"]['dnaSequence']))
 
 pass
