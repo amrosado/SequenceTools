@@ -1,10 +1,12 @@
 from Bio import Entrez
 from Bio.Seq import Seq
-from Bio.Alphabet import generic_dna, IUPAC
+from Bio import SeqIO
 from Bio.Data import CodonTable
+from Bio.Sequencing import Ace
 
 import copy
 import random
+import io
 
 class SequenceTools:
     current_sequence = None
@@ -17,40 +19,43 @@ class SequenceTools:
 
     all_constructs = None
 
-    def return_first_coding_sequence(self, seq, maxPeptideLength=None, min_peptide_length=None):
+    def import_deconstructed_sequence(self, deconstructed_seq):
+        self.all_deconstructed_sequences[deconstructed_seq['sequenceIdentifier']] = deconstructed_seq
+
+    def return_first_coding_sequence(self, seq, max_peptide_length=None, min_peptide_length=None):
         start = None
-        peptideDNASeq = None
+        peptide_dna_seq = None
+
         for i in range(0, len(seq)):
-            subSeq = seq[i:i+3]
-            peptide = subSeq.translate(CodonTable.unambiguous_dna_by_id[1], to_stop=True)
-            seqPeptide = seq[i:].translate(CodonTable.unambiguous_dna_by_id[1], to_stop=True)
+            sub_seq = seq[i:i+3]
+            peptide = sub_seq.translate(table='Standard', to_stop=True)
+            seq_peptide = seq[i:].translate(table='Standard', to_stop=True)
             if str(peptide) == "M":
-                seqPeptideLen = len(seqPeptide)
-                if min_peptide_length is not None and len(seqPeptide) >= min_peptide_length:
+                if min_peptide_length is not None and len(seq_peptide) >= min_peptide_length:
                     start = i
                     break
-        startToEnd = seq[start:]
-        endPeptide = None
-        rang = range(len(startToEnd)//3)
-        for i in range(len(startToEnd)//3):
-            if maxPeptideLength is not None:
-                if i+1 <= maxPeptideLength:
-                    triplet = startToEnd[i*3:(i+1)*3]
+        start_to_end = seq[start:]
+        end_peptide = None
+        rang = range(len(start_to_end)//3)
+        for i in range(len(start_to_end)//3):
+            if max_peptide_length is not None:
+                if i+1 <= max_peptide_length:
+                    triplet = start_to_end[i*3:(i+1)*3]
                     translatedTriplet = triplet.translate(CodonTable.unambiguous_dna_by_id[1])
                     if translatedTriplet == '*':
-                        peptideDNASeq = startToEnd[:(i+1)*3]
+                        peptide_dna_seq = start_to_end[:(i+1)*3]
                 else:
-                    peptideDNASeq = startToEnd[:i*3]
+                    peptide_dna_seq = start_to_end[:i*3]
                     break
             else:
-                triplet = startToEnd[i*3:(i+1)*3]
+                triplet = start_to_end[i*3:(i+1)*3]
                 translatedTriplet = triplet.translate(CodonTable.unambiguous_dna_by_id[1])
                 if translatedTriplet == '*':
-                    peptideDNASeq = startToEnd[:(i+1)*3]
+                    peptide_dna_seq = start_to_end[:(i+1)*3]
                     break
-                elif i == (len(startToEnd)//3-1):
-                    peptideDNASeq = startToEnd[:(i+1)*3]
-        return peptideDNASeq
+                elif i == (len(start_to_end)//3-1):
+                    peptide_dna_seq = start_to_end[:(i+1)*3]
+        return peptide_dna_seq
 
     def deconstruct_imported_orf_sequence(self, sequence, sequence_identifier, sequence_to_search_for, min_peptide_length=None):
         seq = Seq(sequence)
@@ -82,9 +87,9 @@ class SequenceTools:
                 break
 
 
-    def deconstruct_imported_cdna_sequence(self, sequence, sequence_identifier, maxPeptideLength=None, minPeptideLength=None):
+    def deconstruct_imported_cdna_sequence(self, sequence, sequence_identifier, max_peptide_length=None, min_peptide_length=None):
         seq = Seq(sequence)
-        codingSeq = self.return_first_coding_sequence(seq, maxPeptideLength, minPeptideLength)
+        codingSeq = self.return_first_coding_sequence(seq, max_peptide_length, min_peptide_length)
         protein = codingSeq.translate(CodonTable.unambiguous_dna_by_id[1])
         deconstructedDict = {}
         deconstructedDict['coding'] = True
@@ -174,11 +179,14 @@ class SequenceTools:
         self.all_deconstructed_sequences[constructName] = newDeconstructedSeq
         self.all_constructs[constructName] = newDeconstructedSeq
 
-    def make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(self, deconstructedSeq, start, end, name):
+    def make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(self, deconstructed_seq, start, end, name):
+        if isinstance(deconstructed_seq, str):
+            deconstructed_seq = self.all_deconstructed_sequences[deconstructed_seq]
+
         deconstructedRange = []
         i = 0
 
-        for item in deconstructedSeq['deconstructedList']:
+        for item in deconstructed_seq['deconstructedList']:
             if item['peptidePosition'] >= start and item['peptidePosition'] <= end:
                 item_copy = item.copy()
 
@@ -300,12 +308,23 @@ class SequenceTools:
             eSearchRecord = Entrez.read(eSearchHandle)
             eSearchHandle.close()
             for id in eSearchRecord['IdList']:
-                eFetchHandle = Entrez.efetch(db="nucleotide", id=id, retmode="xml")
-                eFetchRecord = Entrez.read(eFetchHandle)
-                eFetchHandle.close()
+                eFetchHandle = Entrez.efetch(db="nucleotide", id=id, retype="gb", retmode="xml", strand="true")
+                eFetchRecord = Entrez.read(eFetchHandle, validate=False)
+
                 for result in eFetchRecord:
                     self.all_efetch_records[ncbiSequenceIdentifier] = result
-                    self.all_sequences[ncbiSequenceIdentifier] = result['GBSeq_sequence']
+                    if 'GBSeq_sequence' in result:
+                        self.all_sequences[ncbiSequenceIdentifier] = result['GBSeq_sequence']
+                    else:
+                        with io.StringIO() as f:
+                            f.write(result['GBSeq_contig'])
+                            f.seek(0)
+                            print(f.read())
+                            gen = Ace.parse(f)
+                            contig = next(gen)
+                            pass
+
+                eFetchHandle.close()
 
     def compare_sequence(self, seq1, seq2):
         zipped = zip(seq1.lower(), seq2.lower())
@@ -324,6 +343,9 @@ class SequenceTools:
         return True
 
     def compare_peptide_construct_to_sequence(self, construct, seq2):
+        if isinstance(construct, str):
+            construct = self.all_deconstructed_sequences[construct]
+
         zipped = zip(construct['peptideSequence'].lower(), seq2.lower())
         zipList = list(zipped)
         for i in range(0, len(zipList)):
@@ -366,6 +388,9 @@ class SequenceTools:
         constructDict['dnaSequence']  = self.return_dna_sequence_from_deconstructed_list(constructDict['deconstructedList'])
         constructDict['peptideSequence'] = self.return_peptide_sequence_from_deconstructed_list(constructDict['deconstructedList'])
         self.all_constructs[constructName] = constructDict
+
+    def return_deconstructed_sequence(self, name):
+        return self.all_deconstructed_sequences[name]
 
 
     def __init__(self, apiKey=None, email=None):

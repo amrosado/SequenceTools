@@ -2,7 +2,7 @@ from SequenceTools import SequenceTools
 
 tools = SequenceTools(email="arosado@gatech.edu")
 tools.import_sequence_by_ncbi_identifier("AJ278965.1")
-tools.deconstruct_imported_cdna_sequence(tools.all_sequences["AJ278965.1"], "AJ278965.1", maxPeptideLength=306)
+tools.deconstruct_imported_cdna_sequence(tools.all_sequences["AJ278965.1"], "AJ278965.1", max_peptide_length=306)
 tools.make_new_deconstructed_sequence_from_construct_sequence_with_peptide_mutation(tools.all_constructs["AJ278965.1"], 'CD80_I68D', 68, 'I', 'D')
 tools.make_new_deconstructed_sequence_from_deconstructed_sequence_peptide_range(tools.all_constructs["CD80_I68D"], 38, 246, "CD80_ExtracellularMTI68D")
 dnaSeq = tools.return_dna_sequence_from_deconstructed_list(tools.all_deconstructed_sequences["CD80_ExtracellularMTI68D"]['deconstructedList'])
