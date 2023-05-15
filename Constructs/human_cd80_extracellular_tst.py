@@ -44,10 +44,10 @@ linker_5 = tools.create_seq_object_from_string(
 tools.deconstruct_dna_sequence(linker_5, "Linker5", True)
 
 construct_list = ['KozakNonCoding', 'SSMIGGK', 'Linker1', 'hCD80_Extracellular', "Linker2", 'APTag', 'Linker3', 'TEV', '8xHis', 'TST', 'Stops']
-cuts_construct_list = ['XbaI'] + construct_list + ['XhoI']
+cuts_construct_list = ['XbaI'] + construct_list
 
 tools.create_construct_from_deconstructed_sequences(construct_list, 'CD80Extracellular-APTag-TEV-8xHis-TST')
-tools.create_construct_from_deconstructed_sequences(cuts_construct_list, 'XbaI-CD80Extracellular-APTag-TEV-8xHis-TST-XhoI')
+tools.create_construct_from_deconstructed_sequences(cuts_construct_list, 'XbaI-CD80Extracellular-APTag-TEV-8xHis-TST')
 
 hcd80ec_seq = tools.create_seq_object_from_string("VIHVTKEVKEVATLSCGHNVSVEELAQTRIYWQKEKKMVLTMMSGDMNIWPEYKNRTIFDITNNLSIVILALRPSDEGTYECVVLKYEKDAFKREHLAEVTLSVKADFPTPSISDFEIPTSNIRRIICSTSGGFPEPHLSWLENGEELNAINTTVSQDPETELYAVSSKLDFNMTTNHSFMCLIKYGHLRVNQTFNWNTTKQEHFPDN")
 compare_result = tools.compare_peptide_construct_to_sequence(tools.all_constructs["hCD80_Extracellular"], hcd80ec_seq)

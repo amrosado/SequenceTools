@@ -4,6 +4,13 @@ class CommonSeqsTags:
     def __init__(self):
         self.seq_tools = SequenceTools()
 
+    def return_spe1(self):
+        spe_1 = self.seq_tools.create_seq_object_from_string("ACTAGT")
+
+        self.seq_tools.deconstruct_dna_sequence(spe_1, "SpeI", False)
+
+        return self.seq_tools.return_deconstructed_sequence("SpeI")
+
     def return_xba1(self):
         xba_1 = self.seq_tools.create_seq_object_from_string("TCTAGA")
 

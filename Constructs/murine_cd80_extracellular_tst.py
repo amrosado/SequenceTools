@@ -45,7 +45,7 @@ tools.deconstruct_dna_sequence(linker_5, "Linker5", True)
 cd80ExtracellularPeptideSequence = tools.create_seq_object_from_string('VDEQLSKSVKDKVLLPCRYNSPHEDESEDRIYWQKHDKVVLSVIAGKLKVWPEYKNRTLYDNTTYSLIILGLVLSDRGTYSCVVQKKERGTYEVKHLALVKLSIKADFSTPNITESGNPSADTKRITCFASGGFPKPRFSWLENGRELPGINTTISQDPESELYTISSQLDFNTTRNHTIKCLIKYGDAHVSEDFTWEKPPEDPPDSKN')
 
 construct_list = ['KozakNonCoding', 'SSMIGGK', 'Linker1', 'mCD80_Extracellular', "Linker2", 'APTag', 'Linker3', 'TEV', '8xHis', 'TST', 'Stops']
-cuts_construct_list = ['XbaI'] + construct_list + ['XhoI']
+cuts_construct_list = ['XbaI'] + construct_list
 
 tools.create_construct_from_deconstructed_sequences(construct_list, 'mCD80Extracellular-APTag-TEV-8xHis-TST')
 tools.create_construct_from_deconstructed_sequences(cuts_construct_list, 'XbaI-mCD80Extracellular-APTag-TEV-8xHis-TST')
